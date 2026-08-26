@@ -1,5 +1,1081 @@
-@import url("./pro-podcast-controls-base.css");
+/*
+ * PRO — Glaube. Macht. Politik.
+ * ZEIT-inspired editorial player, Podigee SDK v2.
+ * The SDK owns state, audio and extension panels; this file owns layout.
+ */
 
+/*
+ * PRO's current web typography uses Nunito Sans for headings and controls,
+ * Merriweather for editorial copy, and Merriweather Sans for metadata. The
+ * same open web fonts are loaded here because a Podigee theme runs in its own
+ * document and cannot inherit the WordPress page's font stack.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Merriweather+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
+
+:root {
+  /* Values taken from the archived PRO Elementor kit (post-12.css). */
+  --pro-accent: #e63625;
+  --pro-accent-dark: #b52a1d;
+  --pro-surface: #f3e2dd;
+  --pro-surface-soft: #f8eeeb;
+  --pro-ink: #000000;
+  --pro-muted: #4d4d4d;
+  --pro-line: rgba(0, 0, 0, 0.18);
+  --pro-focus: #075b8d;
+  --pro-radius: 8px;
+  --pro-sans: "Nunito Sans", Arial, Helvetica, sans-serif;
+  --pro-serif: "Merriweather", Georgia, serif;
+  --pro-meta: "Merriweather Sans", "Nunito Sans", Arial, sans-serif;
+  --pro-space-1: 4px;
+  --pro-space-2: 8px;
+  --pro-space-3: 12px;
+  --pro-space-4: 16px;
+  --pro-space-5: 24px;
+  --pro-space-6: 32px;
+}
+
+.pro-podcast-player,
+.pro-podcast-player *,
+.pro-podcast-player *::before,
+.pro-podcast-player *::after {
+  box-sizing: border-box;
+}
+
+.pro-podcast-player {
+  background: var(--pro-surface);
+  border-radius: var(--pro-radius);
+  color: var(--pro-ink);
+  font-family: var(--pro-sans);
+  font-size: 16px;
+  line-height: 1.4;
+  min-width: 0;
+  overflow: visible;
+  width: 100%;
+}
+
+.pro-podcast-player audio {
+  display: none;
+}
+
+.pro-podcast-player button,
+.pro-podcast-player select,
+.pro-podcast-player input {
+  font: inherit;
+}
+
+.pro-podcast-player button,
+.pro-podcast-player a,
+.pro-podcast-player select,
+.pro-podcast-player input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pro-podcast-player button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.pro-podcast-player button:focus-visible,
+.pro-podcast-player a:focus-visible,
+.pro-podcast-player select:focus-visible,
+.pro-podcast-player input:focus-visible {
+  outline: 3px solid var(--pro-focus);
+  outline-offset: 3px;
+}
+
+.pro-podcast-player a {
+  color: inherit;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.splash-button {
+  display: none;
+}
+
+.main-player {
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+  grid-template-columns: minmax(0, 1fr) clamp(180px, 23vw, 300px);
+  min-width: 0;
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px) 28px;
+}
+
+.episode-content,
+.episode-basic-info {
+  min-width: 0;
+}
+
+.episode-content {
+  align-self: center;
+}
+
+.episode-artwork {
+  align-self: center;
+  background: var(--pro-surface-soft);
+  border-radius: 4px;
+  grid-column: 2;
+  grid-row: 1;
+  overflow: hidden;
+  width: 100%;
+}
+
+.cover-image {
+  aspect-ratio: 1;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.podcast-name {
+  /* Homepage cards use Merriweather Sans for their red category/kicker. */
+  color: var(--pro-accent);
+  font-size: 1rem;
+  font-family: var(--pro-meta);
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 0 var(--pro-space-2);
+  overflow-wrap: anywhere;
+}
+
+.episode-title {
+  /* Small PRO cards: Nunito Sans, 20px, very bold, 1.4 line height. */
+  font-family: var(--pro-sans);
+  color: var(--pro-ink);
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 42ch;
+  overflow-wrap: anywhere;
+}
+
+.episode-subtitle {
+  /* Card excerpts are the editorial text style: Merriweather, 16px/1.5. */
+  color: var(--pro-ink);
+  font-family: var(--pro-serif);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: var(--pro-space-4) 0 0;
+  max-width: 62ch;
+  overflow-wrap: anywhere;
+}
+
+.audio-controls {
+  align-items: center;
+  background: var(--pro-ink);
+  border-radius: 999px;
+  color: #fff;
+  display: flex;
+  margin-top: clamp(24px, 3vw, 32px);
+  max-width: 100%;
+  min-height: 64px;
+  padding: 0 20px 0 8px;
+  width: max-content;
+}
+
+.play-button {
+  align-items: center;
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 14px;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0 14px;
+}
+
+.play-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Podigee's bundled font icons are not needed here; the theme supplies its
+   own play/rewind controls and keeps the labels free of duplicate glyphs. */
+.pro-podcast-player .play-button::before,
+.pro-podcast-player .backward-button::before,
+.pro-podcast-player .forward-button::before,
+.pro-podcast-player .skip-backward-button::before,
+.pro-podcast-player .skip-forward-button::before,
+.pro-podcast-player .share-menu-button::before {
+  content: none !important;
+}
+
+.play-icon {
+  border-bottom: 9px solid transparent;
+  border-left: 14px solid currentColor;
+  border-top: 9px solid transparent;
+  display: block;
+  height: 0;
+  width: 0;
+}
+
+.playing .play-icon {
+  background: linear-gradient(
+    to right,
+    currentColor 0 34%,
+    transparent 34% 66%,
+    currentColor 66% 100%
+  );
+  border: 0;
+  height: 18px;
+  width: 14px;
+}
+
+.play-duration {
+  display: none;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.progress-bar {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 12px;
+  min-width: 190px;
+}
+
+.playing .audio-controls {
+  width: min(100%, 620px);
+}
+
+.playing .progress-bar,
+.playing .speed-control {
+  display: flex;
+}
+
+.progress-bar-time-played {
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  order: 3;
+  white-space: nowrap;
+}
+
+/* Keep the remaining-time form visible after a pause. The SDK toggles this
+   element inline while playback starts; the compact PRO control uses the
+   same remaining-time layout before, during and after playback. */
+.progress-bar-time-played.time-remaining {
+  display: block !important;
+}
+
+.progress-bar-time-played.time-played {
+  display: none;
+}
+
+.progress-bar-rail {
+  background: rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  cursor: ew-resize;
+  flex: 1 1 auto;
+  height: 5px;
+  min-width: 48px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-loaded,
+.progress-bar-played,
+.progress-bar-buffering {
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+
+.progress-bar-loaded { background: rgba(255, 255, 255, 0.55); }
+.progress-bar-played { background: #fff; }
+.progress-bar-buffering {
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45) 0 7px,
+    rgba(255, 255, 255, 0.22) 7px 14px
+  );
+  width: 100%;
+}
+
+.speed-control {
+  align-items: center;
+  display: none;
+  flex: 0 0 auto;
+}
+
+.speed-select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 0 0 8px;
+}
+
+.speed-select option {
+  background: var(--pro-ink);
+  color: #fff;
+}
+
+.skip-controls {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.audio-controls .skip-button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 1px 2px rgba(0, 0, 0, 0.18);
+  color: rgba(255, 255, 255, 0.86);
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  justify-content: center;
+  height: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  padding: 0;
+  position: relative;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+  width: 50px;
+}
+
+.audio-controls .skip-button:hover,
+.audio-controls .skip-button:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.72);
+  color: #fff;
+}
+
+.audio-controls .skip-button:active {
+  transform: scale(0.96);
+}
+
+.skip-icon {
+  fill: none;
+  height: 22px;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  top: 6px;
+  transform: translateX(-50%);
+  width: 22px;
+}
+
+.skip-label {
+  bottom: 5px;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Safari, iOS and macOS can enhance the controls with a translucent glass
+   surface. Browsers without backdrop-filter keep the solid fallback above. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .audio-controls .skip-button {
+    -webkit-backdrop-filter: blur(12px) saturate(145%);
+    backdrop-filter: blur(12px) saturate(145%);
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.playback-tools {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: var(--pro-space-3);
+}
+
+.playback-tools > button {
+  border-bottom: 2px solid transparent;
+  color: var(--pro-ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 4px 0;
+}
+
+.playback-tools > button:hover {
+  border-bottom-color: var(--pro-accent);
+  color: var(--pro-ink);
+}
+
+.skip-backward-button.disabled,
+.skip-forward-button.disabled {
+  display: none;
+}
+
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.buttons:empty {
+  display: none;
+}
+
+.buttons button,
+.buttons a,
+.more-menu-button,
+.share-menu-button,
+.subscribe-menu-button {
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 8px;
+  min-height: 44px;
+  padding: 4px 0;
+  text-decoration: none;
+}
+
+.buttons button:hover,
+.buttons a:hover,
+.more-menu-button:hover,
+.share-menu-button:hover,
+.subscribe-menu-button:hover,
+.buttons .button-active {
+  border-bottom-color: var(--pro-accent);
+}
+
+.more-menu-button {
+  gap: 8px;
+  margin-right: 4px;
+}
+
+.more-menu-button p {
+  align-items: center;
+  display: inline-flex;
+  gap: 3px;
+  margin: 0;
+}
+
+.more-menu-button p span {
+  background: currentColor;
+  border-radius: 50%;
+  display: block;
+  height: 3px;
+  width: 3px;
+}
+
+/* The SDK's v2 More button contains only the dots, so this is its one label. */
+.more-menu-button::after {
+  content: "Mehr";
+}
+
+/* The SDK's SubscribeBar action is the single provider-menu entry in the footer. */
+.buttons .subscribe-menu-button {
+  display: inline-flex !important;
+}
+
+/* The compact PRO footer deliberately exposes one single decision:
+   subscribing. The SDK still creates its complete action set, so its native
+   subscribe button can open the provider menu without a custom intermediary. */
+.footer .buttons > :not(.subscribe-menu-button) {
+  display: none !important;
+}
+
+.footer .buttons .share-menu-button,
+.footer .buttons .more-menu-button,
+.footer .buttons .close-menu-button,
+.footer .buttons .load-more {
+  display: none !important;
+}
+
+.pro-podcast-player .load-more {
+  display: none !important;
+}
+
+.footer .subscribe-menu-button {
+  color: var(--pro-ink);
+  font-family: var(--pro-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.footer .subscribe-menu-button::before,
+.footer .subscribe-menu-button::after {
+  content: none !important;
+}
+
+.player-bottom {
+  position: relative;
+}
+
+/* The provider list is a popover anchored to the footer, not a new player
+   section. Its height therefore never changes the closed player layout. */
+.panels-shell {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+  bottom: calc(100% + 12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  display: none;
+  left: clamp(24px, 4vw, 48px);
+  margin: 0;
+  max-width: min(360px, calc(100% - 48px));
+  padding: 0 16px 12px;
+  position: absolute;
+  width: 360px;
+  z-index: 30;
+}
+
+.panels-shell::after {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #fff;
+  bottom: -9px;
+  content: "";
+  left: 27px;
+  position: absolute;
+}
+
+.panels-shell:has(.panels.subscribe-menu-open) {
+  display: block;
+}
+
+.panels {
+  margin: 0;
+  padding: 0;
+}
+
+.subscribe-panel-title {
+  font-family: var(--pro-sans);
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin: 0;
+  padding: 16px 0 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.rss-feed-link {
+  align-items: center;
+  border-top: 1px solid var(--pro-line);
+  color: var(--pro-ink);
+  display: none;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px 8px;
+  position: relative;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.panels-shell:has(.panels.subscribe-menu-open) .rss-feed-link {
+  display: flex;
+}
+
+.rss-feed-link:hover,
+.rss-feed-link:focus-visible {
+  background: var(--pro-surface-soft);
+}
+
+.rss-feed-link svg {
+  fill: none;
+  flex: 0 0 auto;
+  height: 26px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 26px;
+}
+
+.panels-tabs {
+  border-bottom: 1px solid var(--pro-line);
+  display: none !important;
+  padding: 16px 0;
+}
+
+/* The subscribe popover is the only exposed expansion in this design. SDK tab
+   navigation is kept out of the visual hierarchy along with the other hidden
+   extension actions. */
+
+.panels-tabs-menu ul,
+.more-menu ul,
+.share-menu ul,
+.subscribe-menu ul,
+.panels ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.panels-tabs-menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.panels-tabs-menu button {
+  border-bottom: 2px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 4px 0;
+}
+
+.panels-tabs-menu button:hover,
+.panels-tabs-menu button:focus-visible {
+  border-bottom-color: var(--pro-accent);
+}
+
+.more-menu,
+.share-menu,
+.subscribe-menu,
+.single-panel {
+  padding: 28px 0 0;
+}
+
+/* Podigee supplies the actual platforms and icons. RSS is exposed as the
+   semantic feed link below the panel, so the SDK's raw URL/copy form stays
+   out of the visual interface. */
+.subscribe-menu {
+  padding-top: 0;
+}
+
+.subscribe-menu .copy-rss {
+  display: none !important;
+}
+
+/* The SDK owns this button's click handler. It is visually an invisible
+   backdrop, so any click/tap outside the provider rows closes the popover
+   without introducing a second, custom close mechanism. */
+.subscribe-menu .close-button {
+  align-items: stretch;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  bottom: auto;
+  color: transparent;
+  cursor: default;
+  display: block;
+  height: 100vh;
+  inset: 0;
+  min-height: 0;
+  outline: 0 !important;
+  padding: 0;
+  position: fixed;
+  right: auto;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
+}
+
+.subscribe-menu .close-button svg {
+  display: none;
+}
+
+.subscribe-menu > :not(.close-button),
+.subscribe-menu::before {
+  position: relative;
+  z-index: 101;
+}
+
+.subscribe-menu .subscribe-items {
+  display: block;
+  width: 100%;
+}
+
+.subscribe-menu .subscribe-items-list {
+  display: block;
+  max-width: 680px;
+  width: 100%;
+}
+
+.subscribe-menu .subscribe-item {
+  border-bottom: 1px solid var(--pro-line);
+  border-top: 0;
+  padding: 0;
+}
+
+.subscribe-menu .subscribe-item a {
+  align-items: center;
+  color: var(--pro-ink);
+  display: flex;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px 8px;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.subscribe-menu .subscribe-item a:hover,
+.subscribe-menu .subscribe-item a:focus-visible {
+  background: var(--pro-surface-soft);
+}
+
+.subscribe-menu .subscribe-item a svg {
+  display: block;
+  fill: currentColor;
+  flex: 0 0 auto;
+  height: 26px;
+  width: 26px;
+}
+
+.single-panel-title,
+.more-menu h3,
+.share-menu h3,
+.subscribe-menu h3 {
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.panels li,
+.more-menu li,
+.share-menu li,
+.subscribe-menu li {
+  border-top: 1px solid var(--pro-line);
+  padding: 12px 0;
+}
+
+.panels li:first-child,
+.more-menu li:first-child,
+.share-menu li:first-child,
+.subscribe-menu li:first-child {
+  border-top: 0;
+}
+
+.more-menu button,
+.share-menu button,
+.subscribe-menu button,
+.more-menu a,
+.share-menu a,
+.subscribe-menu a {
+  min-height: 44px;
+}
+
+.more-menu .close-button,
+.share-menu .close-button,
+.single-panel .close-button {
+  align-items: center;
+  border: 1px solid var(--pro-ink);
+  border-radius: 6px;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  width: 44px;
+}
+
+.close-button svg {
+  fill: none;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  width: 18px;
+}
+
+.share-social-links,
+.subscribe-items,
+.podcast-connections-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.share-social-links a,
+.subscribe-items a,
+.download-links a,
+.load-more {
+  color: var(--pro-accent-dark);
+  font-weight: 700;
+}
+
+.share input,
+.share-embed-code,
+.share-deeplink input {
+  border: 1px solid #b9b1ae;
+  border-radius: 4px;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.chaptermarks ul,
+.playlist ul,
+.transcript,
+.episode-description {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.chaptermarks li,
+.playlist li {
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.chaptermarks li:hover,
+.chaptermarks li.active,
+.playlist li:hover,
+.playlist li.active {
+  background: rgba(230, 54, 37, 0.12);
+}
+
+.chaptermark-image {
+  height: 32px;
+  object-fit: cover;
+  width: 32px;
+}
+
+.chaptermark-start {
+  color: var(--pro-accent-dark);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.episode-description,
+.transcript,
+.share-episode-link,
+.share-embed,
+.share-deeplink {
+  overflow-wrap: anywhere;
+}
+
+.footer {
+  align-items: center;
+  border-top: 1px solid var(--pro-line);
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin: 0 clamp(24px, 4vw, 48px);
+  padding: 16px 0 22px;
+}
+
+.footer-actions {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.all-episodes-link {
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  display: inline-flex;
+  font-family: var(--pro-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 8px;
+  min-height: 44px;
+  padding: 4px 0;
+  text-decoration: none;
+}
+
+.all-episodes-link:hover {
+  border-bottom-color: var(--pro-accent);
+}
+
+.all-episodes-link svg {
+  fill: none;
+  height: 16px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  width: 16px;
+}
+
+@media (max-width: 679px) {
+  .pro-podcast-player {
+    border-radius: 6px;
+  }
+
+  .main-player {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px 20px 24px;
+  }
+
+  .episode-artwork {
+    align-self: center;
+    max-width: 260px;
+    order: -1;
+    width: min(100%, 260px);
+  }
+
+  .episode-content {
+    width: 100%;
+  }
+
+  .podcast-name {
+    font-size: 1rem;
+  }
+
+  .episode-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    max-width: none;
+  }
+
+  .episode-subtitle {
+    font-size: 1rem;
+    margin-top: 14px;
+  }
+
+  .audio-controls,
+  .playing .audio-controls {
+    margin-top: 24px;
+    min-height: 64px;
+    width: 100%;
+  }
+
+  .playing .audio-controls {
+    padding-right: 12px;
+  }
+
+  .progress-bar {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .progress-bar-time-played {
+    font-size: 0.72rem;
+  }
+
+  .speed-select {
+    font-size: 0.82rem;
+    padding-left: 3px;
+  }
+
+  .audio-controls .skip-button {
+    height: 48px;
+    min-height: 48px;
+    min-width: 48px;
+    width: 48px;
+  }
+
+  .playback-tools {
+    gap: 4px 18px;
+    margin-top: 12px;
+  }
+
+  .buttons {
+    gap: 0;
+  }
+
+  .footer {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .panels-tabs-menu ul {
+    gap: 4px 18px;
+  }
+
+  .footer {
+    align-items: stretch;
+    flex-direction: row;
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .all-episodes-link {
+    font-size: 0.95rem;
+    min-width: 0;
+  }
+
+  .all-episodes-link {
+    flex: 0 0 auto;
+  }
+
+  .all-episodes-link > span {
+    white-space: nowrap;
+  }
+
+  .panels-shell {
+    background: #fff;
+    border-radius: 8px;
+    bottom: calc(100% + 10px);
+    left: 20px;
+    max-width: calc(100% - 40px);
+    padding: 0 14px 10px;
+    width: calc(100% - 40px);
+  }
+
+  .subscribe-menu {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .subscribe-menu .subscribe-item a {
+    min-height: 60px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .footer .subscribe-menu-button {
+    font-size: 0.95rem;
+  }
+
+  .footer .buttons {
+    align-items: stretch;
+  }
+
+  .footer .subscribe-menu-button {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-podcast-player *,
+  .pro-podcast-player *::before,
+  .pro-podcast-player *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
 /*
  * PRO Podcast – Systemsteuerung
  * Preview-only variant: editorial two-column layout with the controls below
