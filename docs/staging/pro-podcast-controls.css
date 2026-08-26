@@ -2526,3 +2526,115 @@
     max-height: none;
   }
 }
+
+/* Direct provider footer --------------------------------------------------
+   The subscribe menu is intentionally not used as a dialog in this theme.
+   Podigee still creates the provider links from the podcast configuration,
+   but they are rendered immediately as quiet, icon-only links. This avoids
+   both iframe panel clipping and the delayed menu animation. */
+.pro-controls-variant .subscribe-footer .subscribe-menu-button {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-panels-shell {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: block !important;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  overflow: visible;
+  padding: 0;
+  position: static;
+  width: 100%;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu h3,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .copy-rss {
+  display: none !important;
+}
+
+/* Podigee sets this mount to display:none in iframe mode. The provider links
+   are not a popover here, so they must remain available in normal flow. */
+.pro-controls-variant .subscribe-panels-shell .panels,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
+  background: transparent;
+  display: block !important;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-items,
+.pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  list-style: none;
+  margin: 0;
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+}
+
+/* The links and their SVG icons are generated from Podigee's podcast
+   connections; no platform URL is stored in this theme. Podigee removes
+   unconfigured providers itself, so this naturally shows Apple Podcasts,
+   Spotify and Deezer for the current podcast configuration. */
+.pro-controls-variant .subscribe-panels-shell .subscribe-item {
+  border: 0;
+  display: block !important;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a {
+  align-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px;
+  color: #7a7a80;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 32px;
+  padding: 8px 2px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #4f4f54;
+  outline: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
+  display: block;
+  fill: currentColor;
+  height: 22px;
+  width: 22px;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .subscribe-panels-shell {
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    position: static;
+    width: 100%;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+    gap: 4px 14px;
+  }
+}
