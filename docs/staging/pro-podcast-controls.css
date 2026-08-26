@@ -1445,7 +1445,7 @@
 }
 
 .pro-controls-variant .progress-bar-rail {
-  background: rgba(0, 0, 0, 0.28);
+  background: #ededf0;
   flex: 1 1 auto;
   grid-area: rail;
   height: var(--tuner-progress-height, 4px);
@@ -1456,7 +1456,7 @@
 }
 
 .pro-controls-variant .progress-bar-loaded {
-  background: rgba(0, 0, 0, 0.48);
+  background: #dedee3;
   max-width: 100%;
 }
 
@@ -1756,9 +1756,9 @@
     column-gap: var(--tuner-progress-time-gap, 8px);
     gap: 0 var(--tuner-progress-time-gap, 8px);
     grid-template-areas:
-      "speed time-spacer"
-      "progress progress";
-    grid-template-columns: minmax(0, 1fr) var(--tuner-timecode-width, 50px);
+      "transport transport"
+      "speed progress";
+    grid-template-columns: 48px minmax(0, 1fr);
     grid-template-rows: 48px 32px;
     min-height: calc(80px + var(--tuner-dock-mobile-block-start, 6px) + var(--tuner-dock-mobile-block-end, 8px));
     padding:
@@ -1769,6 +1769,7 @@
 
   .pro-controls-variant .speed-control {
     grid-area: speed;
+    align-self: center;
     justify-self: start;
     position: relative;
     width: 48px;
@@ -1776,9 +1777,9 @@
   }
 
   .pro-controls-variant .primary-transport {
-    /* The rail and time use the same 1fr + fixed-time grid below. Keeping
-       the transport group in column one centres it over the actual rail. */
-    grid-area: 1 / 1 / 2 / 2;
+    /* Transport spans the full first row, so its geometric centre is the
+       centre of the capsule rather than the remaining space beside 1×. */
+    grid-area: transport;
     justify-self: center;
   }
 
