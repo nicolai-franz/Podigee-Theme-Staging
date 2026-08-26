@@ -2470,9 +2470,7 @@
 
 @media (max-width: 679px) {
   .pro-controls-variant .subscribe-panels-shell {
-    bottom: auto;
     box-sizing: border-box;
-    position: relative;
     width: 100%;
   }
 
@@ -2483,5 +2481,48 @@
   .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
     right: 12px;
     top: 12px;
+  }
+
+  /* Podigee embeds the player at a configured iframe height on mobile. Keep
+     extension panels inside that viewport instead of extending the document
+     below it, where provider rows would be clipped by the parent iframe. */
+  .pro-controls-variant:has(.panels.subscribe-menu-open)::before,
+  .pro-controls-variant.is-playlist-open::before {
+    background: rgba(20, 20, 22, 0.22);
+    content: "";
+    inset: 0;
+    position: fixed;
+    z-index: 90;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open),
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    bottom: 0;
+    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.16);
+    left: 0;
+    margin: 0;
+    max-height: min(72vh, 560px);
+    max-height: min(72dvh, 560px);
+    overflow: hidden;
+    padding: 20px 16px max(12px, env(safe-area-inset-bottom));
+    position: fixed;
+    right: 0;
+    width: auto;
+    z-index: 100;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-menu,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
+    max-height: calc(min(72vh, 560px) - 64px);
+    max-height: calc(min(72dvh, 560px) - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-items-list,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist ul {
+    max-height: none;
   }
 }
