@@ -1117,6 +1117,17 @@
   outline: 0;
 }
 
+/* Do not expose the static sheet heading before Podigee has rendered its
+   provider rows. That avoids a distracting title-only intermediary state. */
+.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) {
+  display: none;
+}
+
+.pro-controls-variant.is-subscribe-ready .subscribe-panels-shell,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+  display: block;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pro-podcast-player *,
   .pro-podcast-player *::before,
@@ -2484,4 +2495,15 @@
     right: 12px;
     top: 12px;
   }
+}
+
+/* Must come after the base theme's :has() rule: the sheet itself becomes
+   visible only when Podigee has inserted at least one provider row. */
+.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) {
+  display: none;
+}
+
+.pro-controls-variant.is-subscribe-ready .subscribe-panels-shell,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+  display: block;
 }
