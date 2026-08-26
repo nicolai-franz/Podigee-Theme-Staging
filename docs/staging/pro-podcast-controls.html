@@ -158,3 +158,74 @@
     </div>
   </div>
 </div>
+
+<script>
+  /*
+   * Podigee's script embed starts every iframe at 150px. External themes must
+   * report their actual document height back to the parent player whenever
+   * their content changes (for example when a panel opens).
+   */
+  (function () {
+    if (window.parent === window) return;
+
+    var pending = false;
+    var playerId = new URLSearchParams(window.location.search).get("id");
+
+    function playerHeight() {
+      var player = document.querySelector(".pro-podcast-player");
+      var body = document.body;
+      var root = document.documentElement;
+      var bottom = player
+        ? Math.ceil(player.offsetTop + Math.max(player.offsetHeight, player.scrollHeight))
+        : 0;
+
+      return Math.ceil(Math.max(
+        bottom,
+        body ? body.scrollHeight : 0,
+        body ? body.offsetHeight : 0,
+        root.scrollHeight,
+        root.offsetHeight,
+        root.clientHeight
+      ));
+    }
+
+    function reportHeight() {
+      pending = false;
+      var message = {
+        listenTo: "configurePlayer",
+        height: playerHeight()
+      };
+
+      if (playerId) message.id = playerId;
+      window.parent.postMessage(JSON.stringify(message), "*");
+    }
+
+    function scheduleReport() {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(reportHeight);
+    }
+
+    window.addEventListener("DOMContentLoaded", scheduleReport);
+    window.addEventListener("load", scheduleReport);
+    window.addEventListener("resize", scheduleReport);
+
+    if (window.ResizeObserver) {
+      var resizeObserver = new ResizeObserver(scheduleReport);
+      resizeObserver.observe(document.documentElement);
+      if (document.body) resizeObserver.observe(document.body);
+    }
+
+    if (window.MutationObserver && document.body) {
+      new MutationObserver(scheduleReport).observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true
+      });
+    }
+
+    window.setTimeout(scheduleReport, 0);
+    window.setTimeout(scheduleReport, 250);
+    window.setTimeout(scheduleReport, 1000);
+  })();
+</script>
