@@ -240,6 +240,30 @@
         }, 0);
       }
 
+      /* Podigee animates menu panels for 300ms and resizes the iframe during
+         each step. Disable that one SDK animation only for the subscribe
+         trigger and its close control, so providers are available at once. */
+      var savedFxOff = null;
+      var restoreFxTimer = null;
+
+      function openSubscribeWithoutDelay(event) {
+        var target = event.target.closest(
+          ".subscribe-menu-button, .subscribe-menu .close-button"
+        );
+        var jq = window.jQuery || window.$;
+        if (!target || !jq || !jq.fx) return;
+
+        if (savedFxOff === null) savedFxOff = jq.fx.off;
+        jq.fx.off = true;
+        window.clearTimeout(restoreFxTimer);
+        restoreFxTimer = window.setTimeout(function () {
+          jq.fx.off = savedFxOff;
+          savedFxOff = null;
+        }, 0);
+      }
+
+      player.addEventListener("click", openSubscribeWithoutDelay, true);
+
       player.addEventListener("click", function (event) {
         var playlistButton = event.target.closest(".episodes-popover-trigger");
         var subscribeButton = event.target.closest(".subscribe-menu-button");
