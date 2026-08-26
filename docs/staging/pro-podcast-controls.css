@@ -2638,3 +2638,63 @@
     gap: 4px 14px;
   }
 }
+
+/* Editorial provider row --------------------------------------------------
+   The SDK still mounts its provider links in .panels, but that mount now
+   lives directly below the transport controls in the copy column. */
+.pro-controls-variant .subscribe-footer {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-panels-shell {
+  margin-top: 28px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .listen-on-label {
+  color: #707075;
+  font-family: var(--pro-archivo);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-items,
+.pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+  gap: 8px 20px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a {
+  color: #707075;
+  font-family: var(--pro-archivo);
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 8px;
+  letter-spacing: 0;
+  line-height: 1.25;
+  min-height: 44px;
+  padding: 8px 2px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
+  height: 21px;
+  opacity: 0.9;
+  width: 21px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
+  color: #3f3f44;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .subscribe-panels-shell {
+    margin-top: 24px;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+    gap: 4px 18px;
+  }
+}
