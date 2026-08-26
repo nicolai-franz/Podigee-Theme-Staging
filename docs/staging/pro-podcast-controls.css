@@ -509,7 +509,7 @@
 /* The compact PRO footer deliberately exposes one single decision:
    subscribing. The SDK still creates its complete action set, so its native
    subscribe button can open the provider menu without a custom intermediary. */
-.footer .buttons > :not(.subscribe-menu-button) {
+.footer .buttons > :not(.subscribe-menu-button):not(.playlist-button) {
   display: none !important;
 }
 
@@ -1115,17 +1115,6 @@
 .pro-controls-variant .subscribe-footer .buttons > .playlist-button:focus-visible {
   box-shadow: 0 0 0 3px var(--pro-focus);
   outline: 0;
-}
-
-/* Do not expose the static sheet heading before Podigee has rendered its
-   provider rows. That avoids a distracting title-only intermediary state. */
-.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) {
-  display: none;
-}
-
-.pro-controls-variant.is-subscribe-ready .subscribe-panels-shell,
-.pro-controls-variant.is-playlist-open .subscribe-panels-shell {
-  display: block;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2012,7 +2001,7 @@
   min-width: 0;
 }
 
-.pro-controls-variant .subscribe-footer .buttons > :not(.subscribe-menu-button) {
+.pro-controls-variant .subscribe-footer .buttons > :not(.subscribe-menu-button):not(.playlist-button) {
   display: none !important;
 }
 
@@ -2495,15 +2484,4 @@
     right: 12px;
     top: 12px;
   }
-}
-
-/* Must come after the base theme's :has() rule: the sheet itself becomes
-   visible only when Podigee has inserted at least one provider row. */
-.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) {
-  display: none;
-}
-
-.pro-controls-variant.is-subscribe-ready .subscribe-panels-shell,
-.pro-controls-variant.is-playlist-open .subscribe-panels-shell {
-  display: block;
 }

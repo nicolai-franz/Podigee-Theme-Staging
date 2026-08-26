@@ -208,14 +208,8 @@
         var subscribeButton = subscribeTrigger();
         var playlistOpen = isOpen("playlist");
         var subscribeOpen = isOpen("subscribe-menu");
-        var mount = panels();
-        var subscribeReady = Boolean(
-          subscribeOpen && mount &&
-          mount.querySelector(".subscribe-menu .subscribe-item")
-        );
 
         player.classList.toggle("is-playlist-open", playlistOpen);
-        player.classList.toggle("is-subscribe-ready", subscribeReady);
         if (playlistButton) playlistButton.setAttribute("aria-expanded", String(playlistOpen));
         if (subscribeButton) subscribeButton.setAttribute("aria-expanded", String(subscribeOpen));
         scheduleReport();
