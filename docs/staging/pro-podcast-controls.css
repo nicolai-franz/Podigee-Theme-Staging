@@ -1076,6 +1076,7 @@
     transition: none !important;
   }
 }
+@import url("./pro-podcast-controls-base.css");
 
 /*
  * PRO Podcast – Systemsteuerung
