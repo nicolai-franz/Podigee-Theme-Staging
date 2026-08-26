@@ -1076,6 +1076,7 @@
     transition: none !important;
   }
 }
+/* Release marker: 2026-08-26 live sync. */
 @import url("./pro-podcast-controls-base.css");
 
 /*
@@ -2091,6 +2092,47 @@
 
 .pro-controls-variant .subscribe-footer .buttons > :not(.subscribe-menu-button):not(.playlist-button) {
   display: none !important;
+}
+
+/* The playlist trigger is part of the theme footer (rather than the SDK's
+   dynamic action mount) so it remains available when Podigee does not inject
+   a second copy of the control. */
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button {
+  align-items: center;
+  appearance: none;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px;
+  color: #707075;
+  cursor: pointer;
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  font-family: var(--pro-archivo, Archivo, sans-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 4px;
+  justify-content: center;
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 6px 4px 6px 10px;
+  text-decoration: none;
+}
+
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button:hover,
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button:focus-visible,
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button.button-active {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #4f4f54;
+}
+
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+.pro-controls-variant .subscribe-footer > .all-episodes-link.playlist-button .control-icon {
+  height: 24px;
+  width: 24px;
 }
 
 .pro-controls-variant .subscribe-footer .subscribe-menu-button {
