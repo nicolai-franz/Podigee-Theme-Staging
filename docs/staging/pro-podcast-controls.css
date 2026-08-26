@@ -509,7 +509,7 @@
 /* The compact PRO footer deliberately exposes one single decision:
    subscribing. The SDK still creates its complete action set, so its native
    subscribe button can open the provider menu without a custom intermediary. */
-.footer .buttons > :not(.subscribe-menu-button):not(.playlist-button) {
+.footer .buttons > :not(.subscribe-menu-button) {
   display: none !important;
 }
 
@@ -1066,55 +1066,6 @@
   .footer .subscribe-menu-button {
     min-height: 44px;
   }
-}
-
-/* The playlist extension adds its own button to .buttons. Keep that actual
-   SDK control visible here; a hand-written lookalike would only emit the
-   external "allEpisodesClick" event and cannot open the local playlist. */
-.pro-controls-variant .subscribe-footer .buttons {
-  width: 100%;
-}
-
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button {
-  align-items: center;
-  appearance: none;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 8px;
-  color: #707075;
-  cursor: pointer;
-  display: inline-flex !important;
-  font-family: var(--pro-archivo);
-  font-size: 0;
-  line-height: 1.2;
-  margin-left: auto;
-  min-height: 44px;
-  padding: 6px 4px 6px 10px;
-}
-
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button::before {
-  content: none !important;
-  display: none !important;
-}
-
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button::after {
-  content: "Alle Episoden  ›";
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button:hover,
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button:focus-visible,
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button.button-active {
-  background: rgba(0, 0, 0, 0.06) !important;
-  color: #4f4f54;
-}
-
-.pro-controls-variant .subscribe-footer .buttons > .playlist-button:focus-visible {
-  box-shadow: 0 0 0 3px var(--pro-focus);
-  outline: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1916,6 +1867,142 @@
   }
 }
 
+/* The playlist extension adds its own button to .buttons. Keep that actual
+   SDK control visible here; a hand-written lookalike would only emit the
+   external "allEpisodesClick" event and cannot open the local playlist. */
+.pro-controls-variant .subscribe-footer .buttons {
+  width: 100%;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button {
+  align-items: center;
+  appearance: none;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px;
+  color: #707075;
+  cursor: pointer;
+  display: inline-flex !important;
+  font-family: var(--pro-archivo);
+  font-size: 0;
+  line-height: 1.2;
+  margin-left: auto;
+  min-height: 44px;
+  padding: 6px 4px 6px 10px;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button::before {
+  content: none !important;
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button::after {
+  content: "Alle Episoden  ›";
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button:hover,
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button:focus-visible,
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button.button-active {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #4f4f54;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > .playlist-button:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+/* Published footer-panel corrections: the footer is deliberately unlined,
+   while Podigee's own RSS copy controls are not part of this design. */
+.pro-controls-variant .subscribe-footer {
+  border-top: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
+  box-sizing: border-box;
+}
+
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .copy-rss,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .feed-url-copy-btn,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu #feed-url,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu label[for="feed-url"] {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
+  padding-right: 60px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
+  right: 16px;
+  top: 16px;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .subscribe-panels-shell {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
+    padding-right: 56px;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
+    right: 12px;
+    top: 12px;
+  }
+
+  /* Podigee embeds the player at a configured iframe height on mobile. Keep
+     extension panels inside that viewport instead of extending the document
+     below it, where provider rows would be clipped by the parent iframe. */
+  .pro-controls-variant:has(.panels.subscribe-menu-open)::before,
+  .pro-controls-variant.is-playlist-open::before {
+    background: rgba(20, 20, 22, 0.22);
+    content: "";
+    inset: 0;
+    position: fixed;
+    z-index: 90;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open),
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    bottom: 0;
+    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.16);
+    left: 0;
+    margin: 0;
+    max-height: min(72vh, 560px);
+    max-height: min(72dvh, 560px);
+    overflow: hidden;
+    padding: 20px 16px max(12px, env(safe-area-inset-bottom));
+    position: fixed;
+    right: 0;
+    width: auto;
+    z-index: 100;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-menu,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
+    max-height: calc(min(72vh, 560px) - 64px);
+    max-height: calc(min(72dvh, 560px) - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-items-list,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist ul {
+    max-height: none;
+  }
+}
+
 /* Interaction polish for the local comparison variant. The controls remain
    black on hover, press and touch; focus is communicated by the dedicated
    keyboard ring instead of a grey fill. The play state gets a short, subtle
@@ -2437,204 +2524,5 @@
   .pro-controls-variant .progress-bar-time-played {
     animation: none;
     transition: none;
-  }
-}
-
-/* Published footer-panel corrections: the footer is deliberately unlined,
-   while Podigee's own RSS copy controls are not part of this design. */
-.pro-controls-variant .subscribe-footer {
-  border-top: 0;
-}
-
-.pro-controls-variant .subscribe-panels-shell,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
-  box-sizing: border-box;
-}
-
-.pro-controls-variant .subscribe-panels-shell .rss-feed-link,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu .copy-rss,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu .feed-url-copy-btn,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu #feed-url,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu label[for="feed-url"] {
-  display: none !important;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
-  padding-right: 60px;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
-  right: 16px;
-  top: 16px;
-}
-
-@media (max-width: 679px) {
-  .pro-controls-variant .subscribe-panels-shell {
-    box-sizing: border-box;
-    width: 100%;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
-    padding-right: 56px;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
-    right: 12px;
-    top: 12px;
-  }
-
-  /* Podigee embeds the player at a configured iframe height on mobile. Keep
-     extension panels inside that viewport instead of extending the document
-     below it, where provider rows would be clipped by the parent iframe. */
-  .pro-controls-variant:has(.panels.subscribe-menu-open)::before,
-  .pro-controls-variant.is-playlist-open::before {
-    background: rgba(20, 20, 22, 0.22);
-    content: "";
-    inset: 0;
-    position: fixed;
-    z-index: 90;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open),
-  .pro-controls-variant.is-playlist-open .subscribe-panels-shell {
-    background: #fff;
-    border-radius: 22px 22px 0 0;
-    bottom: 0;
-    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.16);
-    left: 0;
-    margin: 0;
-    max-height: min(72vh, 560px);
-    max-height: min(72dvh, 560px);
-    overflow: hidden;
-    padding: 20px 16px max(12px, env(safe-area-inset-bottom));
-    position: fixed;
-    right: 0;
-    width: auto;
-    z-index: 100;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-menu,
-  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
-    max-height: calc(min(72vh, 560px) - 64px);
-    max-height: calc(min(72dvh, 560px) - 64px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-items-list,
-  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist ul {
-    max-height: none;
-  }
-}
-
-/* Direct provider footer --------------------------------------------------
-   The subscribe menu is intentionally not used as a dialog in this theme.
-   Podigee still creates the provider links from the podcast configuration,
-   but they are rendered immediately as quiet, icon-only links. This avoids
-   both iframe panel clipping and the delayed menu animation. */
-.pro-controls-variant .subscribe-footer .subscribe-menu-button {
-  display: none !important;
-}
-
-.pro-controls-variant .subscribe-panels-shell {
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  box-sizing: border-box;
-  display: block !important;
-  margin: 0;
-  max-height: none;
-  max-width: none;
-  overflow: visible;
-  padding: 0;
-  position: static;
-  width: 100%;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu h3,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu .copy-rss {
-  display: none !important;
-}
-
-/* Podigee sets this mount to display:none in iframe mode. The provider links
-   are not a popover here, so they must remain available in normal flow. */
-.pro-controls-variant .subscribe-panels-shell .panels,
-.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
-  background: transparent;
-  display: block !important;
-  margin: 0;
-  padding: 0;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-items,
-.pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  list-style: none;
-  margin: 0;
-  max-height: none;
-  overflow: visible;
-  padding: 0;
-}
-
-/* The links and their SVG icons are generated from Podigee's podcast
-   connections; no platform URL is stored in this theme. Podigee removes
-   unconfigured providers itself, so this naturally shows Apple Podcasts,
-   Spotify and Deezer for the current podcast configuration. */
-.pro-controls-variant .subscribe-panels-shell .subscribe-item {
-  border: 0;
-  display: block !important;
-  margin: 0;
-  padding: 0;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-item a {
-  align-items: center;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 8px;
-  color: #7a7a80;
-  display: inline-flex;
-  justify-content: center;
-  min-height: 44px;
-  min-width: 32px;
-  padding: 8px 2px;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
-.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: #4f4f54;
-  outline: 0;
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
-  box-shadow: 0 0 0 3px var(--pro-focus);
-}
-
-.pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
-  display: block;
-  fill: currentColor;
-  height: 22px;
-  width: 22px;
-}
-
-@media (max-width: 679px) {
-  .pro-controls-variant .subscribe-panels-shell {
-    border-radius: 0;
-    box-shadow: none;
-    margin: 0;
-    padding: 0;
-    position: static;
-    width: 100%;
-  }
-
-  .pro-controls-variant .subscribe-panels-shell .subscribe-items,
-  .pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
-    gap: 4px 14px;
   }
 }
