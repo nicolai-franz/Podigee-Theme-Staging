@@ -1,0 +1,1314 @@
+@import url("./pro-podcast-controls-base.css");
+
+/*
+ * PRO Podcast – Systemsteuerung
+ * Preview-only variant: editorial two-column layout with the controls below
+ * the text column and deliberately unboxed provider links.
+ */
+
+:root {
+  --pro-surface: #fff;
+  --pro-surface-soft: #f3f3f1;
+  --pro-ink: #000;
+  --pro-muted: #4d4d4d;
+  --pro-line: rgba(0, 0, 0, 0.16);
+  --pro-focus: #075b8d;
+  --pro-archivo: "Archivo", Arial, Helvetica, sans-serif;
+}
+
+/* Generic controls use inline SVGs, so they remain crisp at every size.
+   Provider logos still come directly from Podigee. */
+.pro-controls-variant .control-icon {
+  display: block;
+  fill: currentColor;
+  flex: 0 0 auto;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.pro-controls-variant .main-player {
+  align-items: center;
+  background: #fff;
+  box-sizing: border-box;
+  gap: var(--tuner-main-gap-desktop, clamp(24px, 4vw, 48px));
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Keep the editorial structure intact: copy and playback stay in the first
+   column, while the cover remains the second column. */
+.pro-controls-variant .episode-content {
+  box-sizing: border-box;
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+.pro-controls-variant .episode-basic-info {
+  align-self: auto;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.pro-controls-variant .podcast-name {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-family: var(--pro-archivo);
+  font-size: var(--tuner-kicker-font-size, 1rem);
+  font-weight: var(--tuner-kicker-font-weight, 700);
+  margin-bottom: var(--tuner-kicker-title-gap, var(--pro-space-2));
+}
+
+.pro-controls-variant .episode-title {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-family: var(--pro-archivo);
+  font-size: var(--tuner-title-font-size, 20px);
+  font-weight: var(--tuner-title-font-weight, 900);
+}
+
+.pro-controls-variant .episode-subtitle {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-family: var(--pro-archivo);
+  font-size: var(--tuner-body-font-size, 18px);
+  font-weight: var(--tuner-body-font-weight, 400);
+  margin-top: var(--tuner-title-subtitle-gap, var(--pro-space-4));
+}
+
+/* Archivo is the single type family for this local comparison theme. More
+   specific SDK surfaces are repeated below where the base theme declares its
+   own PRO font stack. */
+.pro-controls-variant {
+  border-radius: 0 !important;
+  font-family: var(--pro-archivo);
+}
+
+/* Accepted local tuner baseline. The preview bridge may override these
+   inherited values from the on-page tuning GUI. */
+:root {
+  --tuner-kicker-title-gap: 4px;
+  --tuner-title-subtitle-gap: 4px;
+  --tuner-title-font-size: 20px;
+  --tuner-body-font-size: 18px;
+  --tuner-play-animation-duration: 430ms;
+}
+
+.pro-controls-variant .audio-controls {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  box-shadow: none;
+  color: var(--pro-ink);
+  display: block;
+  margin-top: var(--tuner-controls-top-desktop, clamp(24px, 3vw, 32px));
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+/* The shared theme narrows playback controls while audio is running. This
+   variant keeps the text-column width stable in both states. */
+.pro-controls-variant.playing .audio-controls {
+  width: 100%;
+}
+
+/* One physical surface makes the related playback actions legible as a group.
+   This is a web material, not an imitation of a platform system control. */
+.pro-controls-variant .control-dock {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 999px;
+  box-shadow:
+    0 0 3px rgba(0, 0, 0, 0.035),
+    0 0 26px rgba(0, 0, 0, 0.1);
+  display: grid;
+  gap: 0 var(--tuner-dock-column-gap, 0px);
+  grid-template-areas: "speed transport progress";
+  grid-template-columns: 48px 152px minmax(80px, 1fr);
+  min-height: 64px;
+  min-width: 0;
+  padding:
+    var(--tuner-dock-desktop-block, 8px)
+    var(--tuner-dock-desktop-inline-end, 16px)
+    var(--tuner-dock-desktop-block, 8px)
+    var(--tuner-dock-desktop-inline-start, 8px);
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pro-controls-variant .control-dock {
+    -webkit-backdrop-filter: blur(16px) saturate(135%);
+    backdrop-filter: blur(16px) saturate(135%);
+    background: rgba(255, 255, 255, 0.78);
+  }
+}
+
+.pro-controls-variant .playback-tools,
+.pro-controls-variant .sdk-actions {
+  display: none !important;
+}
+
+/* The SDK keeps these containers inline-hidden until the subscribe menu is
+   opened. This comparison variant intentionally shows the configured
+   providers directly, so override that inline state locally. */
+.pro-controls-variant .direct-subscribe-panels {
+  align-items: center;
+  display: flex !important;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-menu {
+  display: block !important;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  position: static;
+  width: auto;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-menu .close-button,
+.pro-controls-variant .direct-subscribe-panels .subscribe-menu h3,
+.pro-controls-variant .direct-subscribe-panels .subscribe-menu .copy-rss {
+  display: none !important;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-items-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-item {
+  border: 0;
+  padding: 0;
+}
+
+/* Podigee replaces <progressbar> with this direct child. The rail and its
+   timecode form the trailing part of the same continuous control surface. */
+.pro-controls-variant .control-dock > progressbar,
+.pro-controls-variant .control-dock > .progress-bar {
+  align-self: center;
+  box-sizing: border-box;
+  grid-area: progress;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+.pro-controls-variant .control-dock .progress-bar {
+  align-items: center;
+  display: grid !important;
+  gap: var(--tuner-progress-time-gap, 8px);
+  grid-template-columns: minmax(0, 1fr) var(--tuner-timecode-width, 50px);
+  grid-template-areas: "rail time";
+  height: 48px;
+  min-width: 0;
+  max-width: 100%;
+  position: static;
+  width: 100%;
+}
+
+.pro-controls-variant .speed-control::after {
+  content: none;
+  display: none;
+}
+
+/* Keep the tempo control visible in both states. This prevents the skip and
+   play controls from moving sideways when a paused episode starts playing. */
+.pro-controls-variant .speed-control {
+  align-items: center;
+  display: flex !important;
+  flex: 0 0 auto;
+  grid-area: speed;
+}
+
+.pro-controls-variant .primary-transport {
+  align-items: center;
+  display: grid;
+  gap: var(--tuner-transport-gap, 4px);
+  grid-area: transport;
+  grid-template-columns: repeat(3, 48px);
+  justify-content: start;
+}
+
+.pro-controls-variant .speed-select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--pro-ink);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  height: 48px;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0;
+  text-align: center;
+  width: 48px;
+}
+
+.pro-controls-variant .speed-select option {
+  background: #fff;
+  color: #000;
+}
+
+.pro-controls-variant .speed-select:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.pro-controls-variant .skip-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: none;
+  color: var(--pro-ink);
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0;
+  width: 48px;
+}
+
+.pro-controls-variant .skip-button:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.pro-controls-variant .skip-button .control-icon {
+  height: var(--tuner-skip-icon-size, 1.75rem);
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+  width: var(--tuner-skip-icon-size, 1.75rem);
+}
+
+.pro-controls-variant .play-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #000;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0;
+  width: 48px;
+}
+
+.pro-controls-variant .play-button:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.pro-controls-variant .play-button .control-icon {
+  height: var(--tuner-play-icon-size, 50px);
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+  width: var(--tuner-play-icon-size, 50px);
+}
+
+.pro-controls-variant .control-dock button:active,
+.pro-controls-variant .speed-select:active {
+  background: rgba(0, 0, 0, 0.12);
+  color: #000;
+  transform: none;
+}
+
+.pro-controls-variant .control-dock .skip-button:hover,
+.pro-controls-variant .control-dock .skip-button:focus-visible,
+.pro-controls-variant .control-dock .play-button:hover,
+.pro-controls-variant .control-dock .play-button:focus-visible {
+  color: #000;
+}
+
+.pro-controls-variant .control-dock button:focus-visible,
+.pro-controls-variant .speed-select:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+.pro-controls-variant .pause-symbol {
+  display: none;
+}
+
+.pro-controls-variant.playing .play-symbol {
+  display: none;
+}
+
+.pro-controls-variant.playing .pause-symbol {
+  display: inline-block;
+}
+
+.pro-controls-variant .progress-bar-rail {
+  background: rgba(0, 0, 0, 0.28);
+  flex: 1 1 auto;
+  grid-area: rail;
+  height: var(--tuner-progress-height, 4px);
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+  width: 100%;
+}
+
+.pro-controls-variant .progress-bar-loaded {
+  background: rgba(0, 0, 0, 0.48);
+  max-width: 100%;
+}
+
+.pro-controls-variant .progress-bar-played {
+  background: #000;
+  max-width: 100%;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* The filled played portion is sufficient in this compact media layout. */
+.pro-controls-variant .progress-bar-played::after {
+  content: none;
+  display: none;
+}
+
+.pro-controls-variant .progress-bar-buffering {
+  max-width: 100%;
+}
+
+.pro-controls-variant .progress-bar-time-played {
+  align-self: center;
+  cursor: pointer;
+  color: var(--pro-ink);
+  bottom: auto !important;
+  flex: 0 0 var(--tuner-timecode-width, 50px);
+  grid-area: time;
+  line-height: 1;
+  margin: 0;
+  min-width: var(--tuner-timecode-width, 50px);
+  font-variant-numeric: tabular-nums;
+  justify-self: end;
+  position: static !important;
+  right: auto !important;
+  text-align: right;
+  width: var(--tuner-timecode-width, 50px);
+}
+
+/* The SDK provides both values. The local preview starts with remaining time
+   and only switches this visual state; audio and progress remain SDK-owned. */
+.pro-controls-variant[data-time-mode="remaining"] .progress-bar-time-played.time-remaining,
+.pro-controls-variant[data-time-mode="elapsed"] .progress-bar-time-played.time-played {
+  display: block !important;
+}
+
+.pro-controls-variant[data-time-mode="remaining"] .progress-bar-time-played.time-played,
+.pro-controls-variant[data-time-mode="elapsed"] .progress-bar-time-played.time-remaining {
+  display: none !important;
+}
+
+.pro-controls-variant .progress-bar .time-reader {
+  display: none !important;
+}
+
+.pro-controls-variant .progress-bar .progress-tooltip {
+  display: none !important;
+}
+
+/* Provider links remain SDK-generated, but lose the pill frame in this
+   editorially minimal variant. */
+.pro-controls-variant .direct-subscribe-panels .subscribe-item a,
+.pro-controls-variant .rss-feed-link {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+  color: var(--pro-ink);
+  font-weight: 700;
+  display: inline-flex !important;
+  gap: 8px;
+  min-height: 44px;
+  padding-left: 0;
+  padding-right: 0;
+  text-decoration: none;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-item a svg,
+.pro-controls-variant .rss-feed-link svg {
+  height: 24px;
+  width: 24px;
+}
+
+.pro-controls-variant .rss-feed-link .control-icon,
+.pro-controls-variant .all-episodes-link .control-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.pro-controls-variant .all-episodes-link .control-icon {
+  margin-left: -4px;
+}
+
+.pro-controls-variant .rss-feed-link {
+  display: inline-flex !important;
+  gap: 8px;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.pro-controls-variant .direct-subscribe-footer {
+  align-items: center;
+  display: flex;
+  gap: var(--tuner-footer-gap-desktop, 24px);
+  padding-bottom: var(--tuner-footer-bottom-space, 22px);
+  padding-top: var(--tuner-footer-top-space, 16px);
+  position: relative;
+}
+
+.pro-controls-variant .direct-subscribe {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 10px var(--tuner-provider-gap-desktop, 17px);
+  min-width: 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .subscribe-item a:hover,
+.pro-controls-variant .direct-subscribe-panels .subscribe-item a:focus-visible,
+.pro-controls-variant .rss-feed-link:hover,
+.pro-controls-variant .rss-feed-link:focus-visible {
+  background: transparent !important;
+  color: var(--pro-accent);
+}
+
+.pro-controls-variant .direct-subscribe-label {
+  color: var(--pro-muted);
+}
+
+/* The SDK supplies the playlist, its episode rows and the load-more action.
+   This local variant only turns that native extension into a compact popover. */
+.pro-controls-variant .all-episodes-link {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--pro-ink);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font: inherit;
+  justify-content: center;
+  margin: 0;
+}
+
+.pro-controls-variant .all-episodes-link:hover,
+.pro-controls-variant .all-episodes-link:focus-visible,
+.pro-controls-variant .all-episodes-link[aria-expanded="true"] {
+  border-bottom-color: var(--pro-accent);
+}
+
+.pro-controls-variant .all-episodes-link:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist {
+  background: #fff;
+  border: 0;
+  border-radius: 16px;
+  bottom: calc(100% + 12px);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.16);
+  color: var(--pro-ink);
+  display: none !important;
+  margin: 0;
+  max-height: min(440px, 65vh);
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  width: min(520px, calc(100vw - 48px));
+  z-index: 40;
+}
+
+.pro-controls-variant.is-playlist-open .direct-subscribe-panels .playlist {
+  display: block !important;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .single-panel-title {
+  border-bottom: 1px solid var(--pro-line);
+  font-family: var(--pro-sans);
+  font-size: 1.125rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+  padding: 20px 24px 16px;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist ul {
+  list-style: none;
+  margin: 0;
+  max-height: min(332px, 48vh);
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist li {
+  align-items: center;
+  border: 0;
+  display: flex;
+  gap: 14px;
+  height: auto !important;
+  min-height: 60px;
+  padding: 10px 24px;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist li:hover,
+.pro-controls-variant .direct-subscribe-panels .playlist li:focus-visible,
+.pro-controls-variant .direct-subscribe-panels .playlist li.active {
+  background: rgba(230, 54, 37, 0.1);
+  outline: 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .playlist-episode-info {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .list-play-icon {
+  align-items: center;
+  display: flex;
+  flex: 0 0 20px;
+  height: 20px;
+  justify-content: center;
+  width: 20px;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .list-play-icon .play-icon {
+  fill: currentColor;
+  height: 16px;
+  width: 13px;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .list-play-icon .waveform-icon,
+.pro-controls-variant .direct-subscribe-panels .playlist .playlist-episode-number {
+  display: none !important;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .playlist-episode-title {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .playlist-episode-duration {
+  color: var(--pro-muted);
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .buttons {
+  border-top: 1px solid var(--pro-line);
+  padding: 8px 24px 14px;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .load-more {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--pro-accent-dark);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  min-height: 44px;
+  padding: 4px 0;
+}
+
+.pro-controls-variant .direct-subscribe-panels .playlist .load-more:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .main-player {
+    /* The shared theme switches to a vertical flex layout here. Its cover is
+       ordered before the episode text, preserving the earlier mobile flow. */
+    display: flex;
+    flex-direction: column;
+    gap: var(--tuner-main-gap-mobile, 20px);
+  }
+
+  .pro-controls-variant .audio-controls,
+  .pro-controls-variant .playing .audio-controls {
+    display: block;
+    margin-top: var(--tuner-controls-top-mobile, 14px);
+    min-height: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .pro-controls-variant .control-dock {
+    border-radius: var(--tuner-dock-mobile-radius, 24px);
+    column-gap: var(--tuner-progress-time-gap, 8px);
+    gap: 0 var(--tuner-progress-time-gap, 8px);
+    grid-template-areas:
+      "speed time-spacer"
+      "progress progress";
+    grid-template-columns: minmax(0, 1fr) var(--tuner-timecode-width, 50px);
+    grid-template-rows: 48px 32px;
+    min-height: calc(80px + var(--tuner-dock-mobile-block-start, 6px) + var(--tuner-dock-mobile-block-end, 8px));
+    padding:
+      var(--tuner-dock-mobile-block-start, 6px)
+      var(--tuner-dock-mobile-inline, 11px)
+      var(--tuner-dock-mobile-block-end, 8px);
+  }
+
+  .pro-controls-variant .speed-control {
+    grid-area: speed;
+    justify-self: start;
+    position: relative;
+    width: 48px;
+    z-index: 1;
+  }
+
+  .pro-controls-variant .primary-transport {
+    /* The rail and time use the same 1fr + fixed-time grid below. Keeping
+       the transport group in column one centres it over the actual rail. */
+    grid-area: 1 / 1 / 2 / 2;
+    justify-self: center;
+  }
+
+  .pro-controls-variant .control-dock > progressbar,
+  .pro-controls-variant .control-dock > .progress-bar {
+    grid-area: progress;
+  }
+
+  .pro-controls-variant .control-dock .progress-bar {
+    height: 32px;
+  }
+
+  .pro-controls-variant .direct-subscribe-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--tuner-footer-gap-mobile, 8px);
+  }
+
+  .pro-controls-variant .direct-subscribe {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 var(--tuner-provider-gap-mobile, 16px);
+  }
+
+  .pro-controls-variant .direct-subscribe-label {
+    flex-basis: 100%;
+    margin-bottom: 2px;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels {
+    flex: 0 1 auto;
+    width: auto;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .subscribe-menu {
+    width: auto;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .subscribe-items-list {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 var(--tuner-provider-gap-mobile, 16px);
+    width: auto;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .subscribe-item,
+  .pro-controls-variant .direct-subscribe-panels .subscribe-item a,
+  .pro-controls-variant .rss-feed-link {
+    width: auto;
+  }
+
+  .pro-controls-variant .all-episodes-link {
+    align-self: flex-end;
+    margin-top: 0;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .playlist {
+    border-radius: 16px 16px 0 0;
+    bottom: auto;
+    left: 0;
+    margin-top: 16px;
+    max-height: min(68vh, 560px);
+    position: static;
+    width: 100%;
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .playlist ul {
+    max-height: min(52vh, 440px);
+  }
+
+  .pro-controls-variant .direct-subscribe-panels .playlist li {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-controls-variant .play-button,
+  .pro-controls-variant .skip-button,
+  .pro-controls-variant .subscribe-item a,
+  .pro-controls-variant .rss-feed-link {
+    transition: none;
+  }
+}
+
+/* Interaction polish for the local comparison variant. The controls remain
+   black on hover, press and touch; focus is communicated by the dedicated
+   keyboard ring instead of a grey fill. The play state gets a short, subtle
+   morph when Podigee switches between play and pause. */
+.pro-controls-variant .control-dock .speed-select,
+.pro-controls-variant .control-dock .skip-button,
+.pro-controls-variant .control-dock .play-button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.pro-controls-variant .control-dock .speed-select:hover,
+.pro-controls-variant .control-dock .speed-select:active,
+.pro-controls-variant .control-dock .skip-button:hover,
+.pro-controls-variant .control-dock .skip-button:active,
+.pro-controls-variant .control-dock .play-button:hover,
+.pro-controls-variant .control-dock .play-button:active {
+  background: transparent !important;
+  color: var(--pro-ink);
+}
+
+.pro-controls-variant .control-dock .skip-button:focus,
+.pro-controls-variant .control-dock .play-button:focus,
+.pro-controls-variant .control-dock .speed-select:focus {
+  background: transparent !important;
+}
+
+.pro-controls-variant .play-button .control-icon {
+  transform-origin: center;
+}
+
+@keyframes pro-play-state-in {
+  from {
+    opacity: 0;
+    transform: scale(0.78);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pro-controls-variant:not(.playing) .play-button .play-symbol,
+.pro-controls-variant.playing .play-button .pause-symbol {
+  animation: pro-play-state-in var(--tuner-play-animation-duration, 160ms) cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+/* Match the editorial card excerpt: the time label is deliberately quieter
+   than the controls, but uses the same size and serif treatment as the
+   subtitle. */
+.pro-controls-variant .progress-bar-time-played {
+  font-family: var(--pro-archivo);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-controls-variant:not(.playing) .play-button .play-symbol,
+  .pro-controls-variant.playing .play-button .pause-symbol {
+    animation: none;
+  }
+}
+
+/* Native Podigee subscribe action: a quiet footer trigger, with the provider
+   menu kept in the SDK-owned .panels mount below. */
+.pro-controls-variant .subscribe-footer {
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  min-height: 64px;
+  padding: 12px 0 8px;
+  position: relative;
+}
+
+.pro-controls-variant .subscribe-footer .footer-actions,
+.pro-controls-variant .subscribe-footer .buttons {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pro-controls-variant .subscribe-footer .buttons > :not(.subscribe-menu-button) {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button {
+  align-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px;
+  color: #707075;
+  cursor: pointer;
+  display: inline-flex !important;
+  font-family: var(--pro-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 10px;
+  letter-spacing: 0;
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 6px 10px 6px 4px;
+  text-decoration: none;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button::before {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 11.1a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Zm0 6.25a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3ZM4.7 12.1a7.3 7.3 0 0 1 14.6 0h-2a5.3 5.3 0 0 0-10.6 0h-2Zm-3.2 0a10.5 10.5 0 0 1 21 0h-2a8.5 8.5 0 0 0-17 0h-2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  background: currentColor;
+  content: "" !important;
+  display: block;
+  flex: 0 0 28px;
+  height: 28px;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 11.1a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Zm0 6.25a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3ZM4.7 12.1a7.3 7.3 0 0 1 14.6 0h-2a5.3 5.3 0 0 0-10.6 0h-2Zm-3.2 0a10.5 10.5 0 0 1 21 0h-2a8.5 8.5 0 0 0-17 0h-2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  width: 28px;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button:hover,
+.pro-controls-variant .subscribe-footer .subscribe-menu-button:focus-visible,
+.pro-controls-variant .subscribe-footer .subscribe-menu-button.button-active {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #4f4f54;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button:focus-visible,
+.pro-controls-variant .subscribe-footer .all-episodes-link:focus-visible {
+  box-shadow: 0 0 0 3px var(--pro-focus);
+  outline: 0;
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #707075;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font: inherit;
+  gap: 4px;
+  justify-content: center;
+  min-height: 44px;
+  padding: 6px 4px 6px 10px;
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link:hover,
+.pro-controls-variant .subscribe-footer .all-episodes-link[aria-expanded="true"] {
+  background: rgba(0, 0, 0, 0.06);
+  color: #4f4f54;
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link .control-icon {
+  height: 24px;
+  width: 24px;
+}
+
+/* Keep the episode-list trigger typographically identical to the subscribe
+   trigger. The SDK may add a leading list glyph; this local layout uses only
+   the quiet trailing chevron. */
+.pro-controls-variant .subscribe-footer .all-episodes-link {
+  color: #707075;
+  font-family: var(--pro-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link::before {
+  content: none !important;
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link .control-icon {
+  color: #85858a;
+  height: 18px;
+  opacity: 0.68;
+  width: 18px;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button,
+.pro-controls-variant .subscribe-footer .all-episodes-link,
+.pro-controls-variant .subscribe-footer .all-episodes-link > span,
+.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button::before,
+.pro-controls-variant .direct-subscribe-panels .playlist .single-panel-title,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .single-panel-title {
+  font-family: var(--pro-archivo);
+}
+
+.pro-controls-variant .subscribe-footer .all-episodes-link > span {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  line-height: 1.2;
+}
+
+/* The shell is shared by the SDK subscribe menu and the local playlist
+   bridge. It is intentionally hidden until one of those native panels opens. */
+.pro-controls-variant .subscribe-panels-shell {
+  background: #fff;
+  border: 0;
+  border-radius: 16px;
+  bottom: calc(100% + 12px);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: none;
+  left: 0;
+  margin: 0;
+  max-height: min(560px, 70vh);
+  max-width: min(440px, calc(100% - 24px));
+  overflow: hidden;
+  padding: 18px 20px 12px;
+  position: absolute;
+  width: min(440px, calc(100% - 24px));
+  z-index: 50;
+}
+
+.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open),
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+  display: block;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
+  border-bottom: 1px solid var(--pro-line);
+  color: var(--pro-ink);
+  font-family: var(--pro-sans);
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0 48px 14px 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu h3 {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  bottom: auto;
+  color: #646469;
+  display: inline-flex;
+  font-size: 0;
+  height: 44px;
+  inset: auto;
+  justify-content: center;
+  left: auto;
+  min-height: 44px;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 44px;
+  z-index: 2;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button::before {
+  content: "×";
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button svg {
+  display: none;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button:hover,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button:focus-visible {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--pro-ink);
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+  list-style: none;
+  margin: 0;
+  max-height: min(390px, 52vh);
+  overflow-y: auto;
+  padding: 4px 0 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item {
+  border-bottom: 1px solid var(--pro-line);
+  padding: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a {
+  align-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+  color: #55555a;
+  display: flex !important;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 4px;
+  text-decoration: none;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--pro-ink);
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
+  display: block;
+  flex: 0 0 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link {
+  align-items: center;
+  border-top: 0;
+  color: #55555a;
+  display: none;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 4px;
+  text-decoration: none;
+}
+
+.pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .rss-feed-link {
+  display: flex;
+}
+
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link:hover,
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link:focus-visible {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--pro-ink);
+}
+
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link .control-icon {
+  flex: 0 0 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .subscribe-panel-title,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .rss-feed-link,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .subscribe-menu {
+  display: none;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell > .panels {
+  display: block !important;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .rss-feed-link {
+  display: none !important;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
+  display: block !important;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
+  background: #fff;
+  padding: 0;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .single-panel-title {
+  border-bottom: 1px solid var(--pro-line);
+  color: var(--pro-ink);
+  font-family: var(--pro-sans);
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0 0 14px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist ul {
+  list-style: none;
+  margin: 0;
+  max-height: min(390px, 52vh);
+  overflow-y: auto;
+  padding: 4px 0 0;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist li {
+  align-items: center;
+  border-bottom: 1px solid var(--pro-line);
+  display: flex;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 4px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist li:hover,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist li:focus-visible,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist li.active {
+  background: rgba(0, 0, 0, 0.05);
+  outline: 0;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .playlist-episode-info {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .list-play-icon {
+  align-items: center;
+  display: flex;
+  flex: 0 0 20px;
+  height: 20px;
+  justify-content: center;
+  width: 20px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .list-play-icon .play-icon {
+  fill: currentColor;
+  height: 16px;
+  width: 13px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .list-play-icon .waveform-icon,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .playlist-episode-number {
+  display: none !important;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .playlist-episode-title {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .playlist-episode-duration {
+  color: var(--pro-muted);
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .buttons {
+  border-top: 1px solid var(--pro-line);
+  padding: 8px 0 2px;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .load-more {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--pro-muted);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 4px 0;
+}
+
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .load-more:hover,
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .load-more:focus-visible {
+  border-bottom-color: var(--pro-accent);
+  color: var(--pro-ink);
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .subscribe-footer {
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 16px;
+    padding-top: 10px;
+  }
+
+  .pro-controls-variant .subscribe-footer .footer-actions {
+    flex: 1 1 auto;
+  }
+
+  .pro-controls-variant .subscribe-footer .all-episodes-link {
+    margin-left: auto;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell {
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    left: 0;
+    margin-top: 12px;
+    max-height: none;
+    max-width: none;
+    padding: 20px 16px 12px;
+    position: static;
+    width: 100%;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+    max-height: min(52vh, 440px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-controls-variant .control-dock,
+  .pro-controls-variant .speed-control,
+  .pro-controls-variant .skip-button,
+  .pro-controls-variant .progress-bar-time-played {
+    animation: none;
+    transition: none;
+  }
+}
