@@ -1076,6 +1076,7 @@
     transition: none !important;
   }
 }
+
 /*
  * PRO Podcast – Systemsteuerung
  * Preview-only variant: editorial two-column layout with the controls below
@@ -2386,5 +2387,51 @@
   .pro-controls-variant .progress-bar-time-played {
     animation: none;
     transition: none;
+  }
+}
+
+/* Published footer-panel corrections: the footer is deliberately unlined,
+   while Podigee's own RSS copy controls are not part of this design. */
+.pro-controls-variant .subscribe-footer {
+  border-top: 0;
+}
+
+.pro-controls-variant .subscribe-panels-shell,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu {
+  box-sizing: border-box;
+}
+
+.pro-controls-variant .subscribe-panels-shell .rss-feed-link,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .copy-rss,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .feed-url-copy-btn,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu #feed-url,
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu label[for="feed-url"] {
+  display: none !important;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
+  padding-right: 60px;
+}
+
+.pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
+  right: 16px;
+  top: 16px;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .subscribe-panels-shell {
+    bottom: auto;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-panel-title {
+    padding-right: 56px;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button {
+    right: 12px;
+    top: 12px;
   }
 }

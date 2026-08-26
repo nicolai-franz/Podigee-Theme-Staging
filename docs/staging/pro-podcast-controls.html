@@ -141,19 +141,6 @@
       <section class="panels-shell subscribe-panels-shell" aria-labelledby="subscribe-panel-title">
         <h2 class="subscribe-panel-title" id="subscribe-panel-title">Podcast abonnieren</h2>
         <div class="panels" aria-label="Podcast-Abos"></div>
-        <a
-          class="rss-feed-link"
-          pp-href="feed"
-          pp-if="feed"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Podcast als RSS-Feed öffnen"
-        >
-          <svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M6.18 17.82a2.18 2.18 0 1 1-3.08-3.08 2.18 2.18 0 0 1 3.08 3.08zM4 4.44v2.83c7.17 0 12.99 5.82 12.99 12.99h2.83C19.82 11.53 12.55 4.44 4 4.44zm0 5.66v2.83a7.33 7.33 0 0 1 7.33 7.33h2.83C14.16 15.01 9.25 10.1 4 10.1z"/>
-          </svg>
-          <span>Podcast als RSS-Feed</span>
-        </a>
       </section>
     </div>
   </div>
@@ -206,8 +193,107 @@
       window.requestAnimationFrame(reportHeight);
     }
 
+    function setupPanelController() {
+      var player = document.querySelector(".pro-controls-variant");
+      if (!player || player.dataset.panelController) return;
+
+      player.dataset.panelController = "ready";
+
+      function panels() {
+        return player.querySelector(".subscribe-panels-shell .panels");
+      }
+
+      function subscribeTrigger() {
+        return player.querySelector(".subscribe-menu-button");
+      }
+
+      function playlistTrigger() {
+        return player.querySelector(".episodes-popover-trigger");
+      }
+
+      function isOpen(kind) {
+        var mount = panels();
+        return Boolean(mount && mount.classList.contains(kind + "-open"));
+      }
+
+      function syncPanels() {
+        var playlistButton = playlistTrigger();
+        var subscribeButton = subscribeTrigger();
+        var playlistOpen = isOpen("playlist");
+        var subscribeOpen = isOpen("subscribe-menu");
+
+        player.classList.toggle("is-playlist-open", playlistOpen);
+        if (playlistButton) playlistButton.setAttribute("aria-expanded", String(playlistOpen));
+        if (subscribeButton) subscribeButton.setAttribute("aria-expanded", String(subscribeOpen));
+        scheduleReport();
+      }
+
+      function closeNativePanel(kind, restoreFocus) {
+        if (!isOpen(kind)) return;
+
+        var trigger = kind === "playlist" ? playlistTrigger() : subscribeTrigger();
+        if (trigger) trigger.click();
+
+        window.setTimeout(function () {
+          syncPanels();
+          if (restoreFocus && trigger) trigger.focus();
+        }, 0);
+      }
+
+      player.addEventListener("click", function (event) {
+        var playlistButton = event.target.closest(".episodes-popover-trigger");
+        var subscribeButton = event.target.closest(".subscribe-menu-button");
+        var episode = event.target.closest(".single-playlist-episode");
+
+        if (playlistButton || subscribeButton) {
+          window.setTimeout(syncPanels, 0);
+          return;
+        }
+
+        if (episode) {
+          window.setTimeout(function () {
+            closeNativePanel("playlist", true);
+          }, 0);
+        }
+      });
+
+      document.addEventListener("pointerdown", function (event) {
+        var shell = player.querySelector(".subscribe-panels-shell");
+        var target = event.target;
+        var activeKind = isOpen("playlist") ? "playlist" :
+          (isOpen("subscribe-menu") ? "subscribe-menu" : null);
+
+        if (!activeKind || !shell || shell.contains(target)) return;
+        if (subscribeTrigger() && subscribeTrigger().contains(target)) return;
+        if (playlistTrigger() && playlistTrigger().contains(target)) return;
+
+        closeNativePanel(activeKind, false);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        if (isOpen("playlist")) {
+          event.preventDefault();
+          closeNativePanel("playlist", true);
+        } else if (isOpen("subscribe-menu")) {
+          event.preventDefault();
+          closeNativePanel("subscribe-menu", true);
+        }
+      });
+
+      new MutationObserver(syncPanels).observe(player, {
+        attributes: true,
+        attributeFilter: ["class"],
+        childList: true,
+        subtree: true
+      });
+
+      syncPanels();
+    }
+
     window.addEventListener("DOMContentLoaded", scheduleReport);
     window.addEventListener("load", scheduleReport);
+    window.addEventListener("load", setupPanelController);
     window.addEventListener("resize", scheduleReport);
 
     if (window.ResizeObserver) {
@@ -226,5 +312,6 @@
     window.setTimeout(scheduleReport, 0);
     window.setTimeout(scheduleReport, 250);
     window.setTimeout(scheduleReport, 1000);
+    window.setTimeout(setupPanelController, 0);
   })();
 </script>
