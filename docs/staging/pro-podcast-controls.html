@@ -123,19 +123,6 @@
           <div class="buttons"></div>
         </div>
 
-        <button
-          class="all-episodes-link playlist-button episodes-popover-trigger"
-          type="button"
-          aria-controls="pro-episodes-panel"
-          aria-expanded="false"
-          pp-title="translations.allEpisodes"
-          pp-aria-label="translations.allEpisodes"
-        >
-          <span pp-html="translations.allEpisodes">Alle Folgen</span>
-          <svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M9.29 6.71a.996.996 0 0 1 1.41 0L16 12l-5.3 5.29a.996.996 0 1 1-1.41-1.41L13.17 12 9.29 8.12a.996.996 0 0 1 0-1.41z"/>
-          </svg>
-        </button>
       </footer>
 
       <section class="panels-shell subscribe-panels-shell" aria-labelledby="subscribe-panel-title">
@@ -208,7 +195,7 @@
       }
 
       function playlistTrigger() {
-        return player.querySelector(".episodes-popover-trigger");
+        return player.querySelector(".subscribe-footer .buttons .playlist-button");
       }
 
       function isOpen(kind) {
@@ -265,7 +252,7 @@
       player.addEventListener("click", openSubscribeWithoutDelay, true);
 
       player.addEventListener("click", function (event) {
-        var playlistButton = event.target.closest(".episodes-popover-trigger");
+        var playlistButton = event.target.closest(".subscribe-footer .buttons .playlist-button");
         var subscribeButton = event.target.closest(".subscribe-menu-button");
         var episode = event.target.closest(".single-playlist-episode");
 
