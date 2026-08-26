@@ -219,8 +219,7 @@
     if (window.MutationObserver && document.body) {
       new MutationObserver(scheduleReport).observe(document.body, {
         childList: true,
-        subtree: true,
-        attributes: true
+        subtree: true
       });
     }
 
