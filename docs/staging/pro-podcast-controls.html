@@ -197,124 +197,78 @@
 
     function setupPanelController() {
       var player = document.querySelector(".pro-controls-variant");
-      if (!player || player.dataset.panelController) return;
+      var trigger = player && player.querySelector(".episodes-popover-trigger");
+      if (!player || !trigger || player.dataset.episodesController) return;
 
-      player.dataset.panelController = "ready";
+      /*
+       * The SDK provides the real episode data and binds the playlist button.
+       * On live podcast embeds it does not consistently publish a
+       * `playlist-open` class on the panels mount, though. The visual state
+       * must therefore follow the user action itself — the same proven
+       * mechanism used by the local Systemsteuerung preview.
+       */
+      player.dataset.episodesController = "ready";
 
-      function panels() {
-        return player.querySelector(".subscribe-panels-shell .panels");
+      function playlist() {
+        return player.querySelector(".subscribe-panels-shell .playlist");
       }
 
-      function subscribeTrigger() {
-        return player.querySelector(".subscribe-menu-button");
-      }
-
-      function playlistTrigger() {
-        return player.querySelector(".subscribe-footer .playlist-button");
-      }
-
-      function isOpen(kind) {
-        var mount = panels();
-        return Boolean(mount && mount.classList.contains(kind + "-open"));
-      }
-
-      function syncPanels() {
-        var playlistButton = playlistTrigger();
-        var subscribeButton = subscribeTrigger();
-        var playlistOpen = isOpen("playlist");
-        var subscribeOpen = isOpen("subscribe-menu");
-
-        player.classList.toggle("is-playlist-open", playlistOpen);
-        if (playlistButton) playlistButton.setAttribute("aria-expanded", String(playlistOpen));
-        if (subscribeButton) subscribeButton.setAttribute("aria-expanded", String(subscribeOpen));
+      function syncPlaylist() {
+        var panel = playlist();
+        if (!panel) return;
+        panel.id = "pro-episodes-panel";
+        panel.setAttribute("role", "region");
+        panel.setAttribute("aria-label", "Alle Episoden");
         scheduleReport();
       }
 
-      function closeNativePanel(kind, restoreFocus) {
-        if (!isOpen(kind)) return;
+      function setOpen(open, restoreFocus) {
+        player.classList.toggle("is-playlist-open", open);
+        trigger.setAttribute("aria-expanded", String(open));
+        syncPlaylist();
+        scheduleReport();
 
-        var trigger = kind === "playlist" ? playlistTrigger() : subscribeTrigger();
-        if (trigger) trigger.click();
+        if (!open && restoreFocus) {
+          window.setTimeout(function () { trigger.focus(); }, 0);
+        }
+      }
 
+      trigger.addEventListener("click", function () {
         window.setTimeout(function () {
-          syncPanels();
-          if (restoreFocus && trigger) trigger.focus();
+          setOpen(!player.classList.contains("is-playlist-open"), false);
         }, 0);
-      }
-
-      /* Podigee animates menu panels for 300ms and resizes the iframe during
-         each step. Disable that one SDK animation only for the subscribe
-         trigger and its close control, so providers are available at once. */
-      var savedFxOff = null;
-      var restoreFxTimer = null;
-
-      function openSubscribeWithoutDelay(event) {
-        var target = event.target.closest(
-          ".subscribe-menu-button, .subscribe-menu .close-button"
-        );
-        var jq = window.jQuery || window.$;
-        if (!target || !jq || !jq.fx) return;
-
-        if (savedFxOff === null) savedFxOff = jq.fx.off;
-        jq.fx.off = true;
-        window.clearTimeout(restoreFxTimer);
-        restoreFxTimer = window.setTimeout(function () {
-          jq.fx.off = savedFxOff;
-          savedFxOff = null;
-        }, 0);
-      }
-
-      player.addEventListener("click", openSubscribeWithoutDelay, true);
-
-      player.addEventListener("click", function (event) {
-        var playlistButton = event.target.closest(".subscribe-footer .playlist-button");
-        var subscribeButton = event.target.closest(".subscribe-menu-button");
-        var episode = event.target.closest(".single-playlist-episode");
-
-        if (playlistButton || subscribeButton) {
-          window.setTimeout(syncPanels, 0);
-          return;
-        }
-
-        if (episode) {
-          window.setTimeout(function () {
-            closeNativePanel("playlist", true);
-          }, 0);
-        }
       });
 
       document.addEventListener("pointerdown", function (event) {
-        var shell = player.querySelector(".subscribe-panels-shell");
-        var target = event.target;
-        var activeKind = isOpen("playlist") ? "playlist" :
-          (isOpen("subscribe-menu") ? "subscribe-menu" : null);
-
-        if (!activeKind || !shell || shell.contains(target)) return;
-        if (subscribeTrigger() && subscribeTrigger().contains(target)) return;
-        if (playlistTrigger() && playlistTrigger().contains(target)) return;
-
-        closeNativePanel(activeKind, false);
-      });
-
-      document.addEventListener("keydown", function (event) {
-        if (event.key !== "Escape") return;
-        if (isOpen("playlist")) {
-          event.preventDefault();
-          closeNativePanel("playlist", true);
-        } else if (isOpen("subscribe-menu")) {
-          event.preventDefault();
-          closeNativePanel("subscribe-menu", true);
+        var panel = playlist();
+        if (
+          player.classList.contains("is-playlist-open") &&
+          !trigger.contains(event.target) &&
+          !(panel && panel.contains(event.target))
+        ) {
+          setOpen(false, false);
         }
       });
 
-      new MutationObserver(syncPanels).observe(player, {
-        attributes: true,
-        attributeFilter: ["class"],
-        childList: true,
-        subtree: true
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && player.classList.contains("is-playlist-open")) {
+          event.preventDefault();
+          setOpen(false, true);
+        }
       });
 
-      syncPanels();
+      document.addEventListener("click", function (event) {
+        if (event.target.closest(".playlist .single-playlist-episode")) {
+          window.setTimeout(function () { setOpen(false, true); }, 0);
+        }
+      });
+
+      new MutationObserver(function () {
+        syncPlaylist();
+        scheduleReport();
+      }).observe(player, { childList: true, subtree: true });
+
+      syncPlaylist();
     }
 
     window.addEventListener("DOMContentLoaded", scheduleReport);
