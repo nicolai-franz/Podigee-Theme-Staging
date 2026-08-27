@@ -1076,6 +1076,34 @@
     transition: none !important;
   }
 }
+
+/* Final SDK-panel safeguards. Podigee paginates longer podcasts; keeping its
+   own load-more control visible lets listeners reach the complete catalogue
+   without the theme inventing or duplicating episode data. */
+.pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist .load-more {
+  display: inline-flex !important;
+  font-family: var(--pro-archivo);
+}
+
+/* The SDK's subscribe state is exposed inconsistently across embedded
+   contexts. The class is added by the small HTML controller as a stable
+   companion to the native state. */
+.pro-controls-variant.is-subscribe-open .subscribe-panels-shell {
+  display: block;
+}
+
+/* The final Systemsteuerung variant uses Archivo throughout, including text
+   inserted after load by Podigee's extension panels. */
+.pro-controls-variant,
+.pro-controls-variant button,
+.pro-controls-variant a,
+.pro-controls-variant input,
+.pro-controls-variant select,
+.pro-controls-variant .single-panel-title,
+.pro-controls-variant .playlist,
+.pro-controls-variant .subscribe-menu {
+  font-family: var(--pro-archivo) !important;
+}
 /* Release marker: 2026-08-26 live sync. */
 @import url("./pro-podcast-controls-base.css");
 
