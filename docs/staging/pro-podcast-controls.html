@@ -158,31 +158,34 @@
     if (window.parent === window) return;
 
     var pending = false;
+    var lastReportedHeight = null;
     var playerId = new URLSearchParams(window.location.search).get("id");
 
     function playerHeight() {
       var player = document.querySelector(".pro-podcast-player");
-      var body = document.body;
-      var root = document.documentElement;
-      var bottom = player
-        ? Math.ceil(player.offsetTop + Math.max(player.offsetHeight, player.scrollHeight))
-        : 0;
+      if (!player) return 0;
 
-      return Math.ceil(Math.max(
-        bottom,
-        body ? body.scrollHeight : 0,
-        body ? body.offsetHeight : 0,
-        root.scrollHeight,
-        root.offsetHeight,
-        root.clientHeight
-      ));
+      /*
+       * Never derive the reported value from documentElement/body. The parent
+       * iframe applies this very value as its own viewport height, so measuring
+       * those nodes creates a resize feedback loop after a responsive change.
+       * The player root is content-sized and therefore remains shrinkable.
+       */
+      var rect = player.getBoundingClientRect();
+      if (!rect.width || !rect.height) return 0;
+
+      return Math.max(1, Math.ceil(rect.top + rect.height));
     }
 
     function reportHeight() {
       pending = false;
+      var height = playerHeight();
+      if (!height || height === lastReportedHeight) return;
+
+      lastReportedHeight = height;
       var message = {
         listenTo: "configurePlayer",
-        height: playerHeight()
+        height: height
       };
 
       if (playerId) message.id = playerId;
@@ -192,7 +195,35 @@
     function scheduleReport() {
       if (pending) return;
       pending = true;
-      window.requestAnimationFrame(reportHeight);
+      /* Wait for the responsive grid, cover and webfont layout to settle. */
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(reportHeight);
+      });
+    }
+
+    function observePlayerHeight() {
+      var player = document.querySelector(".pro-podcast-player");
+      if (!player || player.dataset.heightObserver) return;
+
+      player.dataset.heightObserver = "ready";
+
+      if (window.ResizeObserver) {
+        new ResizeObserver(scheduleReport).observe(player);
+      }
+
+      if (window.MutationObserver) {
+        new MutationObserver(scheduleReport).observe(player, {
+          attributes: true,
+          attributeFilter: ["class", "style", "src"],
+          childList: true,
+          subtree: true
+        });
+      }
+
+      player.querySelectorAll("img").forEach(function (image) {
+        image.addEventListener("load", scheduleReport);
+        image.addEventListener("error", scheduleReport);
+      });
     }
 
     function setupPanelController() {
@@ -328,24 +359,13 @@
     window.addEventListener("DOMContentLoaded", scheduleReport);
     window.addEventListener("load", scheduleReport);
     window.addEventListener("load", setupPanelController);
+    window.addEventListener("load", observePlayerHeight);
     window.addEventListener("resize", scheduleReport);
-
-    if (window.ResizeObserver) {
-      var resizeObserver = new ResizeObserver(scheduleReport);
-      resizeObserver.observe(document.documentElement);
-      if (document.body) resizeObserver.observe(document.body);
-    }
-
-    if (window.MutationObserver && document.body) {
-      new MutationObserver(scheduleReport).observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
 
     window.setTimeout(scheduleReport, 0);
     window.setTimeout(scheduleReport, 250);
     window.setTimeout(scheduleReport, 1000);
     window.setTimeout(setupPanelController, 0);
+    window.setTimeout(observePlayerHeight, 0);
   })();
 </script>
