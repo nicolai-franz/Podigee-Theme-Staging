@@ -213,12 +213,34 @@
         return player.querySelector(".subscribe-panels-shell .playlist");
       }
 
+      function subscribeButton() {
+        return player.querySelector(".subscribe-menu-button");
+      }
+
+      function subscribeIsOpen() {
+        var mount = player.querySelector(".subscribe-panels-shell .panels");
+        return Boolean(mount && mount.classList.contains("subscribe-menu-open"));
+      }
+
       function syncPlaylist() {
         var panel = playlist();
         if (!panel) return;
         panel.id = "pro-episodes-panel";
         panel.setAttribute("role", "region");
         panel.setAttribute("aria-label", "Alle Episoden");
+        panel.querySelectorAll(".single-panel-title").forEach(function (title) {
+          if (title.textContent.trim() !== "Alle Episoden") {
+            title.textContent = "Alle Episoden";
+          }
+        });
+        scheduleReport();
+      }
+
+      function syncSubscribe() {
+        var button = subscribeButton();
+        var open = subscribeIsOpen();
+        player.classList.toggle("is-subscribe-open", open);
+        if (button) button.setAttribute("aria-expanded", String(open));
         scheduleReport();
       }
 
@@ -239,6 +261,12 @@
         }, 0);
       });
 
+      player.addEventListener("click", function (event) {
+        if (event.target.closest(".subscribe-menu-button, .subscribe-menu .close-button")) {
+          window.setTimeout(syncSubscribe, 0);
+        }
+      });
+
       document.addEventListener("pointerdown", function (event) {
         var panel = playlist();
         if (
@@ -248,12 +276,36 @@
         ) {
           setOpen(false, false);
         }
+
+        var shell = player.querySelector(".subscribe-panels-shell");
+        var button = subscribeButton();
+        if (
+          subscribeIsOpen() &&
+          !(shell && shell.contains(event.target)) &&
+          !(button && button.contains(event.target))
+        ) {
+          /* Close through the real SDK button, so its own state and focus
+             management stay in sync with the visual menu. */
+          if (button) button.click();
+          player.classList.remove("is-subscribe-open");
+          window.setTimeout(syncSubscribe, 0);
+        }
       });
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape" && player.classList.contains("is-playlist-open")) {
           event.preventDefault();
           setOpen(false, true);
+        }
+
+        if (event.key === "Escape" && subscribeIsOpen()) {
+          event.preventDefault();
+          var button = subscribeButton();
+          if (button) button.click();
+          window.setTimeout(function () {
+            syncSubscribe();
+            if (button) button.focus();
+          }, 0);
         }
       });
 
@@ -265,10 +317,12 @@
 
       new MutationObserver(function () {
         syncPlaylist();
+        syncSubscribe();
         scheduleReport();
       }).observe(player, { childList: true, subtree: true });
 
       syncPlaylist();
+      syncSubscribe();
     }
 
     window.addEventListener("DOMContentLoaded", scheduleReport);
