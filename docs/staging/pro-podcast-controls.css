@@ -1202,10 +1202,10 @@
 .pro-controls-variant {
   border-radius: 0 !important;
   font-family: var(--pro-archivo);
-  --tuner-player-padding-top-desktop: 0px;
-  --tuner-player-padding-right-desktop: 0px;
+  --tuner-player-padding-top-desktop: 20px;
+  --tuner-player-padding-right-desktop: 40px;
   --tuner-player-padding-bottom-desktop: 0px;
-  --tuner-player-padding-left-desktop: 0px;
+  --tuner-player-padding-left-desktop: 40px;
   --tuner-kicker-title-gap: 4px;
   --tuner-title-subtitle-gap: 4px;
   --tuner-title-font-size: 20px;
@@ -1236,18 +1236,18 @@
   color: var(--pro-ink);
   display: block;
   margin-top: var(--tuner-controls-top-desktop, clamp(24px, 3vw, 32px));
-  margin-left: 20px;
+  margin-left: 0;
   min-height: 0;
   min-width: 0;
   max-width: 100%;
   padding: 0;
-  width: calc(100% - 20px);
+  width: 100%;
 }
 
 /* The shared theme narrows playback controls while audio is running. This
    variant keeps the text-column width stable in both states. */
 .pro-controls-variant.playing .audio-controls {
-  width: calc(100% - 20px);
+  width: 100%;
 }
 
 /* One physical surface makes the related playback actions legible as a group.
@@ -1797,10 +1797,10 @@
   }
 
   .pro-controls-variant {
-    --tuner-player-padding-top-mobile: 0px;
-    --tuner-player-padding-right-mobile: 0px;
+    --tuner-player-padding-top-mobile: 13px;
+    --tuner-player-padding-right-mobile: 40px;
     --tuner-player-padding-bottom-mobile: 0px;
-    --tuner-player-padding-left-mobile: 0px;
+    --tuner-player-padding-left-mobile: 40px;
     --tuner-footer-gap-mobile: 12px;
     --tuner-provider-gap-mobile: 32px;
   }
@@ -1811,7 +1811,7 @@
     margin-top: var(--tuner-controls-top-mobile, 14px);
     min-height: 0;
     padding: 0;
-    width: calc(100% - 20px);
+    width: 100%;
   }
 
   .pro-controls-variant .control-dock {
