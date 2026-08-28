@@ -2805,15 +2805,14 @@
     max-height: none;
     max-width: 0;
     opacity: 0;
-    overflow: visible;
+    overflow: hidden;
     padding: 0;
     pointer-events: none;
     position: static;
-    transform: translateX(-10px);
+    transform: none;
     transition:
-      opacity 220ms ease,
-      transform 260ms cubic-bezier(.22, 1, .36, 1),
-      max-width 280ms ease;
+      max-width 360ms cubic-bezier(.22, 1, .36, 1),
+      opacity 180ms ease;
     visibility: hidden;
     width: auto;
     z-index: 1;
@@ -2824,7 +2823,6 @@
     max-width: min(430px, 60vw);
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(0);
     visibility: visible;
   }
 
@@ -2862,41 +2860,31 @@
     border: 0;
     opacity: 0;
     padding: 0;
-    transform: translateY(4px);
-    transition:
-      opacity 180ms ease,
-      transform 240ms cubic-bezier(.22, 1, .36, 1);
+    transform: none;
+    transition: opacity 180ms ease;
   }
 
   .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item,
   .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item {
     opacity: 1;
-    transform: translateY(0);
-  }
-
-  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item:nth-child(2),
-  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item:nth-child(2) {
-    transition-delay: 45ms;
-  }
-
-  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item:nth-child(3),
-  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item:nth-child(3) {
-    transition-delay: 90ms;
   }
 
   .pro-controls-variant .subscribe-panels-shell .subscribe-item a {
     align-items: center;
     border: 0 !important;
+    appearance: none;
+    background: rgba(0, 0, 0, 0.06) !important;
     border-radius: 8px;
-    color: #646469;
+    color: #4f4f54;
     display: inline-flex !important;
     font-family: var(--tuner-footer-font-family, var(--pro-archivo)) !important;
     font-size: 0 !important;
     font-weight: var(--tuner-footer-font-weight, 400) !important;
-    gap: 7px;
+    gap: 10px;
     min-height: 44px;
-    padding: 4px 7px;
-    text-decoration: none;
+    padding: 6px 10px 6px 4px;
+    text-decoration: none !important;
+    transition: color 160ms ease, background-color 160ms ease !important;
     white-space: nowrap;
   }
 
@@ -2911,7 +2899,8 @@
   .pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
   .pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
     background: rgba(0, 0, 0, 0.06) !important;
-    color: var(--pro-ink);
+    color: #4f4f54;
+    text-decoration: none !important;
   }
 
   .pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
