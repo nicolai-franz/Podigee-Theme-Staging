@@ -2760,7 +2760,9 @@
   }
 
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom {
-    padding-top: var(--tuner-progress-footer-gap-mobile, 0px) !important;
+    /* Margin permits negative values for a tighter progress/footer gap;
+       negative padding would be invalid and get ignored by the browser. */
+    margin-top: var(--tuner-progress-footer-gap-mobile, 0px) !important;
   }
 }
 
