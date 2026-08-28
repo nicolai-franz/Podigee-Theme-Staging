@@ -2751,6 +2751,13 @@
   }
 
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .control-dock {
+    box-sizing: border-box;
+    min-height: calc(80px + var(--tuner-dock-mobile-block-start, 6px) + var(--tuner-dock-mobile-block-end, 8px));
+    padding:
+      var(--tuner-dock-mobile-block-start, 6px)
+      var(--tuner-dock-mobile-inline, 11px)
+      var(--tuner-dock-mobile-block-end, 8px) !important;
+    row-gap: var(--tuner-dock-mobile-row-gap, 0px);
     border-radius: var(--tuner-dock-mobile-radius, 24px) var(--tuner-dock-mobile-radius, 24px) 0 0 !important;
   }
 
@@ -2763,6 +2770,13 @@
     /* Margin permits negative values for a tighter progress/footer gap;
        negative padding would be invalid and get ignored by the browser. */
     margin-top: var(--tuner-progress-footer-gap-mobile, 0px) !important;
+    padding-bottom: var(--tuner-footer-bottom-space-mobile, 10px) !important;
+  }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom > .subscribe-footer {
+    min-height: var(--tuner-footer-height-mobile, 56px);
+    padding-top: var(--tuner-footer-top-space-mobile, 0px) !important;
+    padding-bottom: 0 !important;
   }
 }
 
@@ -2951,7 +2965,11 @@
     --tuner-footer-gap-mobile: 10px;
     --tuner-kicker-title-gap-mobile: 4px;
     --tuner-title-subtitle-gap-mobile: 4px;
+    --tuner-dock-mobile-block-start: 6px;
+    --tuner-dock-mobile-block-end: 8px;
     --tuner-dock-mobile-row-gap: 0px;
+    --tuner-dock-mobile-inline: 11px;
+    --tuner-dock-mobile-radius: 24px;
     --tuner-footer-top-space-mobile: 0px;
     --tuner-progress-footer-gap-mobile: 0px;
     --tuner-footer-bottom-space-mobile: 10px;
