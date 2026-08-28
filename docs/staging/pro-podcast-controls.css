@@ -3043,16 +3043,10 @@
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
 .pro-controls-variant {
-  --tuner-kicker-font-size: 1.05rem;
-  --tuner-kicker-font-weight: 600;
   --tuner-title-font-size: 22px;
-  --tuner-title-font-weight: 700;
-  --tuner-body-font-family: "Crimson Pro";
-  --tuner-body-font-size: 18px;
-  --tuner-body-font-weight: 400;
-  --tuner-footer-font-family: "Archivo";
+  --tuner-body-font-family: Crimson Pro;
+  --tuner-body-font-size: 20px;
   --tuner-footer-font-size: 15px;
-  --tuner-footer-font-weight: 300;
 }
 
 /* STAGING_TUNER_VALUES:END */
