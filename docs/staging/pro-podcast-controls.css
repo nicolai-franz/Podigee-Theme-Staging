@@ -3037,25 +3037,11 @@
 
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
-@media (max-width: 679px) {
-  .pro-controls-variant {
-    --tuner-player-padding-top-mobile: 13px;
-    --tuner-player-padding-right-mobile: 20px;
-    --tuner-player-padding-bottom-mobile: 20px;
-    --tuner-player-padding-left-mobile: 20px;
-    --tuner-footer-gap-mobile: 10px;
-    --tuner-kicker-title-gap-mobile: 4px;
-    --tuner-title-subtitle-gap-mobile: 4px;
-    --tuner-dock-mobile-block-start: 6px;
-    --tuner-dock-mobile-block-end: 8px;
-    --tuner-dock-mobile-row-gap: 0px;
-    --tuner-dock-mobile-inline: 11px;
-    --tuner-dock-mobile-radius: 24px;
-    --tuner-footer-top-space-mobile: -3px;
-    --tuner-progress-footer-gap-mobile: -14px;
-    --tuner-footer-bottom-space-mobile: 0px;
-    --tuner-footer-height-mobile: 50px;
-  }
+.pro-controls-variant {
+  --tuner-title-font-size: 22px;
+  --tuner-body-font-family: Crimson Pro;
+  --tuner-body-font-size: 18px;
+  --tuner-footer-font-size: 15px;
 }
 
 /* STAGING_TUNER_VALUES:END */
