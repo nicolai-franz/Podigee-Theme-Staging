@@ -2801,12 +2801,22 @@
    icons and accessibility state; this surface only places them beside the
    native "Abonnieren" trigger and animates their reveal. */
 @media (min-width: 680px) {
-  /* Keep the desktop footer's right edge aligned with the playback capsule
-     (the first editorial grid column), while leaving the artwork column clear. */
+  /* Keep the desktop footer in the same inner grid column as the playback
+     capsule. Reusing the main grid's insets, gap and artwork width keeps the
+     footer edges stable when the responsive columns change. */
+  .pro-controls-variant .player-bottom {
+    box-sizing: border-box;
+    padding-left: var(--tuner-player-padding-left-desktop, clamp(24px, 4vw, 48px));
+    padding-right: var(--tuner-player-padding-right-desktop, clamp(24px, 4vw, 48px));
+  }
+
   .pro-controls-variant .player-bottom > .subscribe-footer {
-    margin-right: calc(
-      var(--tuner-player-padding-right-desktop, clamp(24px, 4vw, 48px)) +
-      var(--tuner-main-gap-desktop, clamp(24px, 4vw, 48px)) +
+    box-sizing: border-box;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: calc(
+      100% -
+      var(--tuner-main-gap-desktop, clamp(24px, 4vw, 48px)) -
       clamp(180px, 23vw, 300px)
     );
   }
