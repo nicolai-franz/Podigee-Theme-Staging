@@ -1208,13 +1208,24 @@
   --tuner-player-padding-left-desktop: 40px;
   --tuner-kicker-title-gap: 4px;
   --tuner-title-subtitle-gap: 4px;
-  --tuner-title-font-size: 20px;
-  --tuner-body-font-size: 18px;
+  --tuner-kicker-font-size: 1.05rem;
+  --tuner-kicker-font-weight: 600;
+  --tuner-title-font-size: 24px;
+  --tuner-title-font-weight: 700;
+  --tuner-body-font-family: "Crimson Pro";
+  --tuner-body-font-size: 20px;
+  --tuner-body-font-weight: 400;
+  --tuner-footer-font-family: "Archivo";
+  --tuner-footer-font-size: 16px;
+  --tuner-footer-font-weight: 400;
+  --tuner-progress-time-gap: 8px;
+  --tuner-timecode-width: 50px;
+  --tuner-progress-height: 5px;
   --tuner-play-animation-duration: 430ms;
-  --tuner-footer-top-space: 5px;
-  --tuner-footer-bottom-space: 0px;
+  --tuner-footer-top-space: 4px;
+  --tuner-footer-bottom-space: 20px;
   --tuner-footer-gap-desktop: 30px;
-  --tuner-provider-gap-desktop: 5px;
+  --tuner-provider-gap-desktop: 16px;
 }
 
 /* Accepted local tuner baseline. The preview bridge may override these
@@ -2639,6 +2650,7 @@
     --tuner-player-padding-right-mobile: 20px;
     --tuner-player-padding-bottom-mobile: 8px;
     --tuner-player-padding-left-mobile: 20px;
+    --tuner-footer-gap-mobile: 10px;
   }
 }
 
