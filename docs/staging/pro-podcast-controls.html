@@ -275,6 +275,42 @@
         scheduleReport();
       }
 
+      /* On desktop the provider panel belongs beside the subscribe action,
+       * not in a detached popover. Keep the same DOM nodes and SDK handlers;
+       * only their local placement changes with the responsive breakpoint. */
+      function setupDesktopInlineSubscribe() {
+        var shell = player.querySelector(".subscribe-panels-shell");
+        var host = player.querySelector(".subscribe-footer .footer-actions");
+        if (!shell || !host || shell.dataset.inlinePlacement) return;
+        shell.dataset.inlinePlacement = "ready";
+        var originalParent = shell.parentElement;
+        var originalNext = shell.nextSibling;
+        var media = window.matchMedia ? window.matchMedia("(min-width: 680px)") : null;
+
+        function isDesktop() {
+          return media ? media.matches : window.innerWidth >= 680;
+        }
+
+        function place() {
+          if (isDesktop()) {
+            if (shell.parentElement !== host) host.appendChild(shell);
+          } else if (shell.parentElement === host && originalParent) {
+            if (originalNext && originalNext.parentNode === originalParent) {
+              originalParent.insertBefore(shell, originalNext);
+            } else {
+              originalParent.appendChild(shell);
+            }
+          }
+        }
+
+        place();
+        if (media) {
+          if (media.addEventListener) media.addEventListener("change", place);
+          else if (media.addListener) media.addListener(place);
+        }
+        window.addEventListener("resize", place, { passive: true });
+      }
+
       function setOpen(open, restoreFocus) {
         player.classList.toggle("is-playlist-open", open);
         trigger.setAttribute("aria-expanded", String(open));
@@ -354,6 +390,7 @@
 
       syncPlaylist();
       syncSubscribe();
+      setupDesktopInlineSubscribe();
     }
 
     window.addEventListener("DOMContentLoaded", scheduleReport);

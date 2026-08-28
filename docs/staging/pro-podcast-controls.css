@@ -2760,6 +2760,154 @@
   }
 }
 
+/* Desktop inline subscribe actions. The SDK still owns the provider links,
+   icons and accessibility state; this surface only places them beside the
+   native "Abonnieren" trigger and animates their reveal. */
+@media (min-width: 680px) {
+  .pro-controls-variant .subscribe-footer .footer-actions {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    gap: var(--tuner-provider-gap-desktop, 16px);
+    min-width: 0;
+  }
+
+  .pro-controls-variant .subscribe-footer .footer-actions > .buttons {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: max-content;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex !important;
+    flex: 0 0 auto;
+    margin: 0;
+    max-height: none;
+    max-width: 0;
+    opacity: 0;
+    overflow: visible;
+    padding: 0;
+    pointer-events: none;
+    position: static;
+    transform: translateX(-10px);
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(.22, 1, .36, 1),
+      max-width 280ms ease;
+    visibility: hidden;
+    width: auto;
+    z-index: 1;
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell,
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) {
+    max-width: min(430px, 60vw);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-panel-title,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-menu h3,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button,
+  .pro-controls-variant .subscribe-panels-shell .copy-rss,
+  .pro-controls-variant .subscribe-panels-shell .rss-feed-link {
+    display: none !important;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .panels,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-menu,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items {
+    align-items: center;
+    display: flex !important;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-items-list {
+    align-items: center;
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 0 8px;
+    list-style: none;
+    margin: 0;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item {
+    border: 0;
+    opacity: 0;
+    padding: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 180ms ease,
+      transform 240ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item,
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item:nth-child(2),
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item:nth-child(2) {
+    transition-delay: 45ms;
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-panels-shell .subscribe-item:nth-child(3),
+  .pro-controls-variant .subscribe-panels-shell:has(.panels.subscribe-menu-open) .subscribe-item:nth-child(3) {
+    transition-delay: 90ms;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item a {
+    align-items: center;
+    border: 0 !important;
+    border-radius: 8px;
+    color: #646469;
+    display: inline-flex !important;
+    font-family: var(--tuner-footer-font-family, var(--pro-archivo)) !important;
+    font-size: var(--tuner-footer-font-size, 16px) !important;
+    font-weight: var(--tuner-footer-font-weight, 400) !important;
+    gap: 7px;
+    min-height: 44px;
+    padding: 4px 7px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item a:hover,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item a:focus-visible {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: var(--pro-ink);
+  }
+
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item a svg {
+    display: block;
+    flex: 0 0 22px;
+    height: 22px;
+    width: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-controls-variant .subscribe-panels-shell,
+  .pro-controls-variant .subscribe-panels-shell .subscribe-item {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
 @media (max-width: 679px) {
