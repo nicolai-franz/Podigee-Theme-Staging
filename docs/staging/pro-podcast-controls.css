@@ -2633,14 +2633,12 @@
 
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
-.pro-controls-variant {
-  --tuner-player-padding-top-desktop: 10px;
-}
-
 @media (max-width: 679px) {
   .pro-controls-variant {
-    --tuner-player-padding-top-mobile: 20px;
-    --tuner-player-padding-bottom-mobile: 0px;
+    --tuner-player-padding-top-mobile: 13px;
+    --tuner-player-padding-right-mobile: 20px;
+    --tuner-player-padding-bottom-mobile: 8px;
+    --tuner-player-padding-left-mobile: 20px;
   }
 }
 
