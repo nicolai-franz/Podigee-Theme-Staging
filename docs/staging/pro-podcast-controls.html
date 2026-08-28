@@ -285,7 +285,9 @@
             text.className = "preview-provider-label";
             link.appendChild(text);
           }
-          text.textContent = label;
+          if (text.textContent !== label) {
+            text.textContent = label;
+          }
           link.setAttribute("aria-label", label);
         });
       }
