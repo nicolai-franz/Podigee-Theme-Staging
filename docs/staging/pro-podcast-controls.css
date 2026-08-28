@@ -2742,6 +2742,14 @@
    shared radius so the upper and lower corners render identically. The class
    is preview-only and has no effect on the published desktop layout. */
 @media (max-width: 679px) {
+  .pro-controls-variant .main-player {
+    gap: max(0px, var(--tuner-main-gap-mobile, 20px));
+  }
+
+  .pro-controls-variant .main-player > * + * {
+    margin-top: min(0px, var(--tuner-main-gap-mobile, 20px));
+  }
+
   .pro-controls-variant.preview-footer-in-capsule .audio-controls {
     border-radius: var(--tuner-dock-mobile-radius, 24px) !important;
   }
@@ -2753,12 +2761,19 @@
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .control-dock {
     box-sizing: border-box;
     min-height: calc(80px + var(--tuner-dock-mobile-block-start, 6px) + var(--tuner-dock-mobile-block-end, 8px));
-    padding:
-      var(--tuner-dock-mobile-block-start, 6px)
-      var(--tuner-dock-mobile-inline, 11px)
-      var(--tuner-dock-mobile-block-end, 8px) !important;
-    row-gap: var(--tuner-dock-mobile-row-gap, 0px);
+    padding-top: max(0px, var(--tuner-dock-mobile-block-start, 6px)) !important;
+    padding-right: max(0px, var(--tuner-dock-mobile-inline, 11px)) !important;
+    padding-bottom: max(0px, var(--tuner-dock-mobile-block-end, 8px)) !important;
+    padding-left: max(0px, var(--tuner-dock-mobile-inline, 11px)) !important;
+    margin-top: min(0px, var(--tuner-dock-mobile-block-start, 6px)) !important;
+    margin-bottom: min(0px, var(--tuner-dock-mobile-block-end, 8px)) !important;
+    row-gap: max(0px, var(--tuner-dock-mobile-row-gap, 0px));
     border-radius: var(--tuner-dock-mobile-radius, 24px) var(--tuner-dock-mobile-radius, 24px) 0 0 !important;
+  }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .control-dock > progressbar,
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .control-dock > .progress-bar {
+    margin-top: min(0px, var(--tuner-dock-mobile-row-gap, 0px));
   }
 
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom,
@@ -2770,12 +2785,14 @@
     /* Margin permits negative values for a tighter progress/footer gap;
        negative padding would be invalid and get ignored by the browser. */
     margin-top: var(--tuner-progress-footer-gap-mobile, 0px) !important;
-    padding-bottom: var(--tuner-footer-bottom-space-mobile, 10px) !important;
+    padding-bottom: max(0px, var(--tuner-footer-bottom-space-mobile, 10px)) !important;
+    margin-bottom: min(0px, var(--tuner-footer-bottom-space-mobile, 10px)) !important;
   }
 
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom > .subscribe-footer {
     min-height: var(--tuner-footer-height-mobile, 56px);
-    padding-top: var(--tuner-footer-top-space-mobile, 0px) !important;
+    padding-top: max(0px, var(--tuner-footer-top-space-mobile, 0px)) !important;
+    margin-top: min(0px, var(--tuner-footer-top-space-mobile, 0px)) !important;
     padding-bottom: 0 !important;
   }
 }
