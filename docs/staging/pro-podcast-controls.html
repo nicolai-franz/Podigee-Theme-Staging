@@ -267,9 +267,33 @@
         scheduleReport();
       }
 
+      function providerLabel(link) {
+        var value = ((link.href || "") + " " + (link.textContent || "")).toLowerCase();
+        if (value.indexOf("apple") !== -1 || value.indexOf("itunes") !== -1) return "Apple";
+        if (value.indexOf("spotify") !== -1) return "Spotify";
+        if (value.indexOf("deezer") !== -1) return "Deezer";
+        return (link.textContent || "").trim();
+      }
+
+      function syncProviderLabels() {
+        player.querySelectorAll(".subscribe-panels-shell .subscribe-item a").forEach(function (link) {
+          if (link.href && /feed/i.test(link.href)) return;
+          var label = providerLabel(link);
+          var text = link.querySelector(".preview-provider-label");
+          if (!text) {
+            text = document.createElement("span");
+            text.className = "preview-provider-label";
+            link.appendChild(text);
+          }
+          text.textContent = label;
+          link.setAttribute("aria-label", label);
+        });
+      }
+
       function syncSubscribe() {
         var button = subscribeButton();
         var open = subscribeIsOpen();
+        syncProviderLabels();
         player.classList.toggle("is-subscribe-open", open);
         if (button) button.setAttribute("aria-expanded", String(open));
         scheduleReport();
