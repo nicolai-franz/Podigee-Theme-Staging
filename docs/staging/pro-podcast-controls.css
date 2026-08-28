@@ -2719,6 +2719,29 @@
   }
 }
 
+/* Local staging preview capsule bridge. The preview moves the native footer
+   into the audio surface on mobile; keep every participating layer on one
+   shared radius so the upper and lower corners render identically. The class
+   is preview-only and has no effect on the published desktop layout. */
+@media (max-width: 679px) {
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls {
+    border-radius: var(--tuner-dock-mobile-radius, 24px) !important;
+  }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls::before {
+    border-radius: inherit;
+  }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .control-dock {
+    border-radius: var(--tuner-dock-mobile-radius, 24px) var(--tuner-dock-mobile-radius, 24px) 0 0 !important;
+  }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom,
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom > .subscribe-footer {
+    border-radius: 0 0 var(--tuner-dock-mobile-radius, 24px) var(--tuner-dock-mobile-radius, 24px) !important;
+  }
+}
+
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
 @media (max-width: 679px) {
