@@ -2758,12 +2758,26 @@
   .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom > .subscribe-footer {
     border-radius: 0 0 var(--tuner-dock-mobile-radius, 24px) var(--tuner-dock-mobile-radius, 24px) !important;
   }
+
+  .pro-controls-variant.preview-footer-in-capsule .audio-controls > .player-bottom {
+    padding-top: var(--tuner-progress-footer-gap-mobile, 0px) !important;
+  }
 }
 
 /* Desktop inline subscribe actions. The SDK still owns the provider links,
    icons and accessibility state; this surface only places them beside the
    native "Abonnieren" trigger and animates their reveal. */
 @media (min-width: 680px) {
+  /* Keep the desktop footer's right edge aligned with the playback capsule
+     (the first editorial grid column), while leaving the artwork column clear. */
+  .pro-controls-variant .player-bottom > .subscribe-footer {
+    margin-right: calc(
+      var(--tuner-player-padding-right-desktop, clamp(24px, 4vw, 48px)) +
+      var(--tuner-main-gap-desktop, clamp(24px, 4vw, 48px)) +
+      clamp(180px, 23vw, 300px)
+    );
+  }
+
   .pro-controls-variant .subscribe-footer .footer-actions {
     align-items: center;
     display: flex;
@@ -2929,6 +2943,7 @@
     --tuner-title-subtitle-gap-mobile: 4px;
     --tuner-dock-mobile-row-gap: 0px;
     --tuner-footer-top-space-mobile: 0px;
+    --tuner-progress-footer-gap-mobile: 0px;
     --tuner-footer-bottom-space-mobile: 10px;
     --tuner-footer-height-mobile: 56px;
   }
