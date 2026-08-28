@@ -2653,14 +2653,24 @@
 
 .pro-controls-variant .control-dock > progressbar,
 .pro-controls-variant .control-dock > .progress-bar,
-.pro-controls-variant .control-dock .progress-bar,
 .pro-controls-variant .control-dock .progress-bar-rail,
 .pro-controls-variant .control-dock .progress-bar-time-played {
   align-self: center;
 }
 
-.pro-controls-variant .control-dock .progress-bar {
+/* Podigee renders the progress control as a <progressbar> custom element
+   (not a .progress-bar wrapper). Make that actual element the two-column
+   grid so the rail is vertically centred and the timecode stays on its line. */
+.pro-controls-variant .control-dock > progressbar {
+  align-items: center;
+  display: grid !important;
+  gap: var(--tuner-progress-time-gap, 8px);
+  grid-template-columns: minmax(0, 1fr) var(--tuner-timecode-width, 50px);
+  grid-template-areas: "rail time";
+  height: 48px;
   justify-items: stretch;
+  min-width: 0;
+  width: 100%;
 }
 
 .pro-controls-variant .subscribe-footer {
@@ -2691,7 +2701,7 @@
     overflow: hidden;
   }
 
-  .pro-controls-variant .control-dock .progress-bar {
+  .pro-controls-variant .control-dock > progressbar {
     align-items: center;
     height: 32px;
   }
