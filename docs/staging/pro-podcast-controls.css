@@ -2694,6 +2694,24 @@
 }
 
 @media (max-width: 679px) {
+  .pro-controls-variant .podcast-name {
+    margin-bottom: var(--tuner-kicker-title-gap-mobile, var(--tuner-kicker-title-gap, var(--pro-space-2)));
+  }
+
+  .pro-controls-variant .episode-subtitle {
+    margin-top: var(--tuner-title-subtitle-gap-mobile, var(--tuner-title-subtitle-gap, var(--pro-space-4)));
+  }
+
+  .pro-controls-variant .control-dock {
+    row-gap: var(--tuner-dock-mobile-row-gap, 0px);
+  }
+
+  .pro-controls-variant .subscribe-footer {
+    min-height: var(--tuner-footer-height-mobile, 56px);
+    padding-bottom: var(--tuner-footer-bottom-space-mobile, 10px);
+    padding-top: var(--tuner-footer-top-space-mobile, 0px);
+  }
+
   .pro-controls-variant .control-dock {
     /* Explicitly set all four corners. A single shorthand avoids the
        asymmetric top radius caused by the SDK wrapper's inherited rules. */
@@ -2751,6 +2769,12 @@
     --tuner-player-padding-bottom-mobile: 8px;
     --tuner-player-padding-left-mobile: 20px;
     --tuner-footer-gap-mobile: 10px;
+    --tuner-kicker-title-gap-mobile: 4px;
+    --tuner-title-subtitle-gap-mobile: 4px;
+    --tuner-dock-mobile-row-gap: 0px;
+    --tuner-footer-top-space-mobile: 0px;
+    --tuner-footer-bottom-space-mobile: 10px;
+    --tuner-footer-height-mobile: 56px;
   }
 }
 
