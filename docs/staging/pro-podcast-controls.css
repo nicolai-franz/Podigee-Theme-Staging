@@ -2909,6 +2909,22 @@
     height: 22px;
     width: 22px;
   }
+
+  /* The comparison iframe can be narrower than a real desktop column. When
+     all provider names would otherwise collide with "Mehr Episoden", let
+     the latter take a clean second footer row instead of overlapping. */
+  .pro-controls-variant.is-subscribe-open .subscribe-footer {
+    flex-wrap: wrap;
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-footer .footer-actions {
+    flex: 0 0 auto;
+    width: max-content;
+  }
+
+  .pro-controls-variant.is-subscribe-open .subscribe-footer > .all-episodes-link {
+    margin-left: auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
