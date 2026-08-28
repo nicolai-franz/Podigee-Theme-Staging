@@ -2642,6 +2642,73 @@
   }
 }
 
+/* Final control-surface alignment. Keep the rail and the time label on the
+   same optical centre as the other controls; the SDK's progress element can
+   otherwise stretch its anonymous wrapper and pull the rail toward the top.
+   Footer actions use one shared flex centre so their icon/text baselines do
+   not drift apart at narrow widths. */
+.pro-controls-variant .control-dock {
+  align-items: center;
+}
+
+.pro-controls-variant .control-dock > progressbar,
+.pro-controls-variant .control-dock > .progress-bar,
+.pro-controls-variant .control-dock .progress-bar,
+.pro-controls-variant .control-dock .progress-bar-rail,
+.pro-controls-variant .control-dock .progress-bar-time-played {
+  align-self: center;
+}
+
+.pro-controls-variant .control-dock .progress-bar {
+  justify-items: stretch;
+}
+
+.pro-controls-variant .subscribe-footer {
+  align-items: center;
+  border-top: 0;
+}
+
+.pro-controls-variant .subscribe-footer .footer-actions,
+.pro-controls-variant .subscribe-footer .buttons,
+.pro-controls-variant .subscribe-footer .subscribe-menu-button,
+.pro-controls-variant .subscribe-footer .all-episodes-link {
+  align-items: center;
+  align-self: center;
+}
+
+.pro-controls-variant .subscribe-footer .subscribe-menu-button,
+.pro-controls-variant .subscribe-footer .all-episodes-link {
+  height: 44px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 679px) {
+  .pro-controls-variant .control-dock {
+    /* Explicitly set all four corners. A single shorthand avoids the
+       asymmetric top radius caused by the SDK wrapper's inherited rules. */
+    border-radius: var(--tuner-dock-mobile-radius, 24px) !important;
+    overflow: hidden;
+  }
+
+  .pro-controls-variant .control-dock .progress-bar {
+    align-items: center;
+    height: 32px;
+  }
+
+  .pro-controls-variant .subscribe-footer {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--tuner-footer-gap-mobile, 10px);
+  }
+
+  .pro-controls-variant .subscribe-footer .footer-actions,
+  .pro-controls-variant .subscribe-footer .buttons {
+    align-items: center;
+  }
+}
+
 /* STAGING_TUNER_VALUES:START — local preview publication */
 
 @media (max-width: 679px) {
