@@ -1140,6 +1140,11 @@
   gap: var(--tuner-main-gap-desktop, clamp(24px, 4vw, 48px));
   max-width: 100%;
   min-width: 0;
+  padding:
+    var(--tuner-player-padding-top-desktop, clamp(28px, 4vw, 44px))
+    var(--tuner-player-padding-right-desktop, clamp(24px, 4vw, 48px))
+    var(--tuner-player-padding-bottom-desktop, 28px)
+    var(--tuner-player-padding-left-desktop, clamp(24px, 4vw, 48px));
   width: 100%;
 }
 
@@ -1197,6 +1202,19 @@
 .pro-controls-variant {
   border-radius: 0 !important;
   font-family: var(--pro-archivo);
+  --tuner-player-padding-top-desktop: 0px;
+  --tuner-player-padding-right-desktop: 0px;
+  --tuner-player-padding-bottom-desktop: 0px;
+  --tuner-player-padding-left-desktop: 0px;
+  --tuner-kicker-title-gap: 4px;
+  --tuner-title-subtitle-gap: 4px;
+  --tuner-title-font-size: 20px;
+  --tuner-body-font-size: 18px;
+  --tuner-play-animation-duration: 430ms;
+  --tuner-footer-top-space: 5px;
+  --tuner-footer-bottom-space: 0px;
+  --tuner-footer-gap-desktop: 30px;
+  --tuner-provider-gap-desktop: 5px;
 }
 
 /* Accepted local tuner baseline. The preview bridge may override these
@@ -1770,6 +1788,20 @@
     display: flex;
     flex-direction: column;
     gap: var(--tuner-main-gap-mobile, 20px);
+    padding:
+      var(--tuner-player-padding-top-mobile, 28px)
+      var(--tuner-player-padding-right-mobile, 20px)
+      var(--tuner-player-padding-bottom-mobile, 24px)
+      var(--tuner-player-padding-left-mobile, 20px);
+  }
+
+  .pro-controls-variant {
+    --tuner-player-padding-top-mobile: 0px;
+    --tuner-player-padding-right-mobile: 0px;
+    --tuner-player-padding-bottom-mobile: 0px;
+    --tuner-player-padding-left-mobile: 0px;
+    --tuner-footer-gap-mobile: 12px;
+    --tuner-provider-gap-mobile: 32px;
   }
 
   .pro-controls-variant .audio-controls,
