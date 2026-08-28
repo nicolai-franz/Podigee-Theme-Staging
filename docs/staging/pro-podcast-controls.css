@@ -1190,7 +1190,7 @@
   max-width: 100%;
   overflow-wrap: break-word;
   white-space: normal;
-  font-family: var(--pro-archivo);
+  font-family: var(--tuner-body-font-family, var(--pro-archivo));
   font-size: var(--tuner-body-font-size, 18px);
   font-weight: var(--tuner-body-font-weight, 400);
   margin-top: var(--tuner-title-subtitle-gap, var(--pro-space-4));
@@ -1202,6 +1202,7 @@
 .pro-controls-variant {
   border-radius: 0 !important;
   font-family: var(--pro-archivo);
+  font-synthesis: none;
   --tuner-player-padding-top-desktop: 20px;
   --tuner-player-padding-right-desktop: 40px;
   --tuner-player-padding-bottom-desktop: 0px;
@@ -2215,9 +2216,9 @@
   color: #707075;
   cursor: pointer;
   display: inline-flex !important;
-  font-family: var(--pro-sans);
-  font-size: 1rem;
-  font-weight: 500;
+  font-family: var(--tuner-footer-font-family, var(--pro-archivo));
+  font-size: var(--tuner-footer-font-size, 1rem);
+  font-weight: var(--tuner-footer-font-weight, 500);
   gap: 10px;
   letter-spacing: 0;
   line-height: 1.2;
@@ -2285,9 +2286,9 @@
    the quiet trailing chevron. */
 .pro-controls-variant .subscribe-footer .all-episodes-link {
   color: #707075;
-  font-family: var(--pro-sans);
-  font-size: 1rem;
-  font-weight: 500;
+  font-family: var(--tuner-footer-font-family, var(--pro-archivo));
+  font-size: var(--tuner-footer-font-size, 1rem);
+  font-weight: var(--tuner-footer-font-weight, 500);
   letter-spacing: 0;
   line-height: 1.2;
 }
@@ -2306,7 +2307,10 @@
 
 .pro-controls-variant .subscribe-footer .subscribe-menu-button,
 .pro-controls-variant .subscribe-footer .all-episodes-link,
-.pro-controls-variant .subscribe-footer .all-episodes-link > span,
+.pro-controls-variant .subscribe-footer .all-episodes-link > span {
+  font-family: var(--tuner-footer-font-family, var(--pro-archivo)) !important;
+}
+
 .pro-controls-variant .subscribe-panels-shell .subscribe-panel-title,
 .pro-controls-variant .subscribe-panels-shell .subscribe-menu .close-button::before,
 .pro-controls-variant .direct-subscribe-panels .playlist .single-panel-title,
@@ -2315,8 +2319,9 @@
 }
 
 .pro-controls-variant .subscribe-footer .all-episodes-link > span {
-  font-size: 1rem !important;
-  font-weight: 500 !important;
+  font-family: var(--tuner-footer-font-family, var(--pro-archivo)) !important;
+  font-size: var(--tuner-footer-font-size, 1rem) !important;
+  font-weight: var(--tuner-footer-font-weight, 500) !important;
   line-height: 1.2;
 }
 
