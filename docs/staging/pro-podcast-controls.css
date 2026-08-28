@@ -2852,10 +2852,11 @@
     padding: 0;
     pointer-events: none;
     position: static;
-    transform: none;
+    transform: translateX(-14px);
     transition:
       max-width 360ms cubic-bezier(.22, 1, .36, 1),
-      opacity 180ms ease;
+      opacity 180ms ease,
+      transform 360ms cubic-bezier(.22, 1, .36, 1);
     visibility: hidden;
     width: auto;
     z-index: 1;
@@ -2866,6 +2867,7 @@
     max-width: min(430px, 60vw);
     opacity: 1;
     pointer-events: auto;
+    transform: translateX(0);
     visibility: visible;
   }
 
@@ -2956,20 +2958,72 @@
     width: 22px;
   }
 
-  /* The comparison iframe can be narrower than a real desktop column. When
-     all provider names would otherwise collide with "Mehr Episoden", let
-     the latter take a clean second footer row instead of overlapping. */
-  .pro-controls-variant.is-subscribe-open .subscribe-footer {
-    flex-wrap: wrap;
+  /* Keep the action row stable while the provider links reveal. The available
+     footer width may shrink, but opening the menu must never create a second
+     row or push "Mehr Episoden" below the capsule. */
+  .pro-controls-variant .subscribe-footer {
+    flex-wrap: nowrap !important;
   }
 
-  .pro-controls-variant.is-subscribe-open .subscribe-footer .footer-actions {
+  .pro-controls-variant .subscribe-footer .footer-actions {
+    flex: 1 1 auto !important;
+    min-width: 0;
+    overflow: hidden;
+    width: auto !important;
+  }
+
+  .pro-controls-variant .subscribe-footer > .all-episodes-link {
     flex: 0 0 auto;
-    width: max-content;
+    margin-left: auto !important;
+    white-space: nowrap;
   }
 
-  .pro-controls-variant.is-subscribe-open .subscribe-footer > .all-episodes-link {
-    margin-left: auto;
+  /* On desktop the SDK injects the playlist into the same panels mount that
+     hosts subscriptions. That mount is inline and width-collapsed until the
+     subscribe action opens, so explicitly promote the playlist to a popover
+     anchored to .player-bottom when "Mehr Episoden" is activated. */
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell {
+    display: flex !important;
+    max-width: 0 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .subscribe-panel-title,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .subscribe-menu,
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .rss-feed-link {
+    display: none !important;
+  }
+
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell > .panels {
+    display: block !important;
+    height: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    width: 0 !important;
+  }
+
+  .pro-controls-variant.is-playlist-open .subscribe-panels-shell .playlist {
+    background: #fff;
+    border: 0;
+    border-radius: 16px;
+    bottom: calc(100% + 12px);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 16px 40px rgba(0, 0, 0, 0.16);
+    display: block !important;
+    left: auto;
+    max-height: min(440px, 65vh);
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    right: 0;
+    width: min(520px, calc(100vw - 48px));
+    z-index: 40;
   }
 }
 
