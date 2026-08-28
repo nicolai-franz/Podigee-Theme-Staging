@@ -1217,13 +1217,13 @@
   --tuner-body-font-weight: 400;
   --tuner-footer-font-family: "Archivo";
   --tuner-footer-font-size: 16px;
-  --tuner-footer-font-weight: 400;
+  --tuner-footer-font-weight: 300;
   --tuner-progress-time-gap: 8px;
   --tuner-timecode-width: 50px;
   --tuner-progress-height: 5px;
   --tuner-play-animation-duration: 430ms;
-  --tuner-footer-top-space: 4px;
-  --tuner-footer-bottom-space: 20px;
+  --tuner-footer-top-space: -10px;
+  --tuner-footer-bottom-space: 19px;
   --tuner-footer-gap-desktop: 30px;
   --tuner-provider-gap-desktop: 16px;
 }
@@ -2977,7 +2977,7 @@
   .pro-controls-variant {
     --tuner-player-padding-top-mobile: 13px;
     --tuner-player-padding-right-mobile: 20px;
-    --tuner-player-padding-bottom-mobile: 8px;
+    --tuner-player-padding-bottom-mobile: 20px;
     --tuner-player-padding-left-mobile: 20px;
     --tuner-footer-gap-mobile: 10px;
     --tuner-kicker-title-gap-mobile: 4px;
@@ -2987,10 +2987,10 @@
     --tuner-dock-mobile-row-gap: 0px;
     --tuner-dock-mobile-inline: 11px;
     --tuner-dock-mobile-radius: 24px;
-    --tuner-footer-top-space-mobile: 0px;
-    --tuner-progress-footer-gap-mobile: 0px;
-    --tuner-footer-bottom-space-mobile: 10px;
-    --tuner-footer-height-mobile: 56px;
+    --tuner-footer-top-space-mobile: -3px;
+    --tuner-progress-footer-gap-mobile: -14px;
+    --tuner-footer-bottom-space-mobile: 0px;
+    --tuner-footer-height-mobile: 50px;
   }
 }
 
