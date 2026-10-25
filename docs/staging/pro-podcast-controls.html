@@ -268,11 +268,20 @@
       }
 
       function providerLabel(link) {
-        var value = ((link.href || "") + " " + (link.textContent || "")).toLowerCase();
+        /* Read the SDK's label only. Including our appended label here makes
+         * providers without a short name grow on every MutationObserver pass
+         * (for example: "Alexa" -> "AlexaAlexa" -> ...), starving the SDK. */
+        var nativeLabel = Array.prototype.map.call(link.childNodes, function (node) {
+          if (node.nodeType === 3) return node.textContent;
+          if (node.nodeType !== 1 || node.tagName.toLowerCase() === "svg" ||
+              node.classList.contains("preview-provider-label")) return "";
+          return node.textContent;
+        }).join(" ").replace(/\s+/g, " ").trim();
+        var value = ((link.href || "") + " " + nativeLabel).toLowerCase();
         if (value.indexOf("apple") !== -1 || value.indexOf("itunes") !== -1) return "Apple";
         if (value.indexOf("spotify") !== -1) return "Spotify";
         if (value.indexOf("deezer") !== -1) return "Deezer";
-        return (link.textContent || "").trim();
+        return nativeLabel || link.getAttribute("title") || link.getAttribute("aria-label") || "";
       }
 
       function syncProviderLabels() {
@@ -288,7 +297,9 @@
           if (text.textContent !== label) {
             text.textContent = label;
           }
-          link.setAttribute("aria-label", label);
+          if (link.getAttribute("aria-label") !== label) {
+            link.setAttribute("aria-label", label);
+          }
         });
       }
 
@@ -408,10 +419,15 @@
         }
       });
 
+      var panelSyncPending = false;
       new MutationObserver(function () {
-        syncPlaylist();
-        syncSubscribe();
-        scheduleReport();
+        if (panelSyncPending) return;
+        panelSyncPending = true;
+        window.requestAnimationFrame(function () {
+          panelSyncPending = false;
+          syncPlaylist();
+          syncSubscribe();
+        });
       }).observe(player, { childList: true, subtree: true });
 
       syncPlaylist();
